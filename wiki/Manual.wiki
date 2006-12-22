@@ -1,0 +1,51 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+REPK HOW-TO
+
+repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
+
+OVERVIEW
+
+REPK is a program to calculate the length of terminal restriction fragments for a given list of enzymes and compare the results among user-defined groups in order to choose four enzymes with the highest resolving power for the sequences in question. It is most powerful when you know something about the community you are interested in. Shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engelbretson and Moyer, 200X). However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
+
+HOW TO RUN IT
+1) You must have Perl installed
+2) Name your sequence file alignment.fasta and your enzyme files enzymes.txt, place them in the same folder as REPK, and double-click the script file (repk_[version].pl)
+
+OR
+
+3) run the program from the command line
+
+type: perl repk_[version].pl [alignment file] [enzyme file]
+
+If you know you have Perl installed but this doesn't work you may have to specify its location, e.g. "/usr/bin/perl repk_[version].pl" --The default file names are alignment.fasta and enzymes.txt, but you can specify your own filesnames. If you specify the enzyme file then you must also specify the alignment file. At the command line type
+
+perl repk_delta.pl /path/to/YourSequenceFile.fasta /path/to/YourEnzymeFile.txt
+
+HOW TO MAKE IT WORK
+The first input ("alignment.fasta"/"YourSequenceFile.fasta") is a multiple sequence alignment in FASTA format, with all sequences beginning at the 5' end of your primer. The sequences should have no gaps, have Windows or Unix end-of-line formatting (see below for how to convert them), and have no whitespace in the taxa names. Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program. Sequence groups are coded as characters of the taxa name as separated by a delimiter, default value is an underscore "_". This variable is called $splitter. You can also adjust which substring (as delimited by your delimiter) to use for the analysis. Thus, one sequence can be composed of multiple groups, e.g. "GAM_Psmonas__Psychromonas_antarctica" and "GAM_Shnella__Shewanella_frigidimarina" would both be identified as belonging to the "GAM" group with variable $splitnum = 1, but as "Psmonas" and "Shnella" with $splitnum=2. An example file might look like this:
+
+>ALF_Roseobacter__Hyphomonas_jannaschiana;AJ227814
+XXXXXXXXXXXXXXXXXXXXXACGAACGCTGGCGGCAGGCCTAACACATGCAAGTCGAAC
+GACATAGTGGCAGACGGGTGAGTAACGCGTGGGAACGTACCTTTCGCTACGGAATAGCTC
+>ALF_Roseobacter__marine_alpha_proteobacterium_AS-26;AJ391187
+XXXXXXXXXXXXXXXXXXXXXACGAACGCTGGCGGCAGGCCTAACACATGCAAGTCGAGC
+GCACTCTTCGGAGTGAGCGGCGGACGGGTTAGTAACGCGTGGGAACATACCCTTTTCTAC
+.
+.
+.
+
+The second input ("enzymes.txt"/"YourEnzymeFile.txt") is a tab-delimited text file with the restriction enzyme name and recognition site -- including cut site -- on each line, followed by the separator "ISO", followed by names of isoschizomers [check?], which should also be Windows- or Unix-formatted. Any of the standard nucleotide abbreviations can be used (A,C,T,G,N,X,B,D,H,V,K,Y,S,W,M,R). An example file containing all commercially available Type II restriction enzymes [with palindromic cut sites? check] from REBASE (the restriction enzyme database, http://rebase.neb.com) is included and starts like this:
+
+AasI    GACNNNN^NNGTC   ISO     DrdI    DseDI                                   
+AatI    AGG^CCT ISO     Eco147I PceI    SseBI   StuI                    
+AatII   GACGT^C ISO                                                     
+Acc16I  TGC^GCA ISO     AviII   FspI    NsbI                            
+
