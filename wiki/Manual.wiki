@@ -1,6 +1,7 @@
 #summary REPK manual
 
-{{{REPK HOW-TO
+{{{
+REPK HOW-TO
 
 repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
 
