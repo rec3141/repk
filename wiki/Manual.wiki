@@ -1,6 +1,6 @@
 #summary REPK manual
 
-{{{
+
 REPK HOW-TO
 
 repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
@@ -83,5 +83,3 @@ The program makes a new directory for every run and inside the directory makes s
     * "no_cuts.txt" This file lists the enzymes that don't cut/distinguish any of the groups.
     * "success.txt" This file lists the enzymes that singlehandedly distinguish all of the groups.
     * "yes_cuts.txt" These are enzymes that do cut/distinguish the groups with sufficient stringency. Deprecated. Used for debugging.
-
-}}}
