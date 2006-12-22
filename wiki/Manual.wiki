@@ -1,30 +1,21 @@
 #summary REPK manual
 
 
-REPK HOW-TO
+=REPK Manual=
 
 repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
 
-OVERVIEW
+==OVERVIEW==
 
-REPK is a program to calculate the length of terminal restriction fragments for a given list of enzymes and compare the results among user-defined groups in order to choose four enzymes with the highest resolving power for the sequences in question. It is most powerful when you know something about the community you are interested in. Shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engelbretson and Moyer, 200X). However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
+REPK (Restriction Endonuclease PicKer) finds sets of 4 commercially available restriction endonucleases which together uniquely differentiate user-designated sequence groups from a user-supplied FASTA format sequence file.  The user-defined sequences groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engelbretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
 
-HOW TO RUN IT
-1) You must have Perl installed
-2) Name your sequence file alignment.fasta and your enzyme files enzymes.txt, place them in the same folder as REPK, and double-click the script file (repk_[version].pl)
+==INPUTS==
+===1. Multiple sequence alignment in FASTA format.===
+All sequences should begin at the 5' end of your LABELED primer and end at the 3' end of your UNLABELED primer.  The sequences should have no gaps and have no whitespace in the taxa names. Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program.
 
-OR
+  * Sequence groups are coded as characters of the taxa name and separated by a delimiter, and each sequence can have multiple delimiters.
 
-3) run the program from the command line
-
-type: perl repk_[version].pl [alignment file] [enzyme file]
-
-If you know you have Perl installed but this doesn't work you may have to specify its location, e.g. "/usr/bin/perl repk_[version].pl" --The default file names are alignment.fasta and enzymes.txt, but you can specify your own filesnames. If you specify the enzyme file then you must also specify the alignment file. At the command line type
-
-perl repk_delta.pl /path/to/YourSequenceFile.fasta /path/to/YourEnzymeFile.txt
-
-HOW TO MAKE IT WORK
-The first input ("alignment.fasta"/"YourSequenceFile.fasta") is a multiple sequence alignment in FASTA format, with all sequences beginning at the 5' end of your primer. The sequences should have no gaps, have Windows or Unix end-of-line formatting (see below for how to convert them), and have no whitespace in the taxa names. Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program. Sequence groups are coded as characters of the taxa name as separated by a delimiter, default value is an underscore "_". This variable is called $splitter. You can also adjust which substring (as delimited by your delimiter) to use for the analysis. Thus, one sequence can be composed of multiple groups, e.g. "GAM_Psmonas__Psychromonas_antarctica" and "GAM_Shnella__Shewanella_frigidimarina" would both be identified as belonging to the "GAM" group with variable $splitnum = 1, but as "Psmonas" and "Shnella" with $splitnum=2. An example file might look like this:
+An example file might look like this:
 
 {{{
 >ALF_Roseobacter__Hyphomonas_jannaschiana;AJ227814
@@ -38,24 +29,11 @@ GCACTCTTCGGAGTGAGCGGCGGACGGGTTAGTAACGCGTGGGAACATACCCTTTTCTAC
 .
 }}}
 
-The second input ("enzymes.txt"/"YourEnzymeFile.txt") is a tab-delimited text file with the restriction enzyme name and recognition site -- including cut site -- on each line, followed by the separator "ISO", followed by names of isoschizomers [check?], which should also be Windows- or Unix-formatted. Any of the standard nucleotide abbreviations can be used (A,C,T,G,N,X,B,D,H,V,K,Y,S,W,M,R). An example file containing all commercially available Type II restriction enzymes [with palindromic cut sites? check] from REBASE (the restriction enzyme database, http://rebase.neb.com) is included and starts like this:
+===2. Restriction endonucleases and cut sites.===
+For now only the list from [http://rebase.neb.com/rebase/rebase.html REBASE] is available.  Future possibilities will include user-defined and user-selected enzymes.
+ 
 
-{{{
-AasI    GACNNNN^NNGTC   ISO     DrdI    DseDI                                   
-AatI    AGG^CCT ISO     Eco147I PceI    SseBI   StuI                    
-AatII   GACGT^C ISO                                                     
-Acc16I  TGC^GCA ISO     AviII   FspI    NsbI                            
-}}}
-
-END OF LINE PROBLEMS
-
-The Unix program tr is used to translate between two sets of characters. Characters specified in one set are converted to the matching character in the second set. To convert a Mac OS text file to a Unix text file, enter at a Unix command line:
-
-tr '\r' '\n' < macfile.txt > unixfile.txt
-
-You must use the single quotation marks for these commands to work. The < and > are part of the command, too. If you don't have "tr" then do a web search for "convert text file Unix YourOperatingSystemHere" to find out how to make it work.
-
-OPTIONS
+==OPTIONS==
 There are several variables you can change to make the program work better for you.
 
 $cutoff [= 5]
@@ -87,3 +65,28 @@ The program makes a new directory for every run and inside the directory makes s
     * "no_cuts.txt" This file lists the enzymes that don't cut/distinguish any of the groups.
     * "success.txt" This file lists the enzymes that singlehandedly distinguish all of the groups.
     * "yes_cuts.txt" These are enzymes that do cut/distinguish the groups with sufficient stringency. Deprecated. Used for debugging.
+
+
+
+==REFERENCES==
+Cole JR, Chai B, Farris RJ, Wang Q, Kulam SA, McGarrell DM, Garrity GM, Tiedje JM. The Ribosomal Database Project (RDP-II): sequences and tools for high-throughput rRNA analysis. Nucleic Acids Research 2005 Jan 1;33(Database Issue):D294-D296. doi: 10.1093/nar/gki038.
+
+Engebretson JJ, Moyer CL (2003) Fidelity of select restriction endonucleases in determining microbial diversity by terminal-restriction fragment length polymorphism.  Applied and Environmental Microbiology 69:4823-4829.
+
+Ludwig W, Strunk O, Westram R, Richter L, Meier H, Yadhu K, et al. (2004) ARB: a software environment for sequence data.  Nucleic Acids Research 32:1363–1371.
+
+Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length polymorphism analysis program, a web-based research tool for microbial community analysis.
+
+Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
+
+Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
+
+
+
+
+
+
+
+
+
+
