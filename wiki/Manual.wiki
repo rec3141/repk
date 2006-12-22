@@ -13,7 +13,7 @@ REPK (*R*estriction *E*ndonuclease *P*ic*k*er) finds sets of 4 commercially avai
 ===1. Multiple sequence alignment in FASTA format.===
 All sequences should begin at the 5' end of your LABELED primer and end at the 3' end of your UNLABELED primer.  The sequences should have no gaps and have no whitespace in the taxa names. Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program.
 
-  * Sequence groups are coded as characters of the taxa name and separated by a delimiter, and each sequence can have multiple delimiters.
+  * Sequence groups are coded as characters of the taxa name and separated by a delimiter, and each sequence can have multiple delimiters.  You may find the [http://rdp.cme.msu.edu/classifier/classifier.jsp RDP classifier] useful in generating these subsets.
 
 An example file might look like this:
 
@@ -35,7 +35,7 @@ AAACCGGTTGATCCTGCCGGACCTGACCGCTATCGGGGTGGGGCTAAGCC
 For now only the list from [http://rebase.neb.com/rebase/rebase.html REBASE] is available, in addition to a fake "no cut" enzyme.  Future possibilities will include user-defined and user-selected enzymes.
 
 ===2. Group Subset Delimiter===
-The character used to separate groups in your FASTA sequence names, current choices are underscore (_) and semicolon (;).  The example file above uses underscore group subset delimiters.
+The character used to separate groups in your FASTA sequence names, current choices are underscore (\_) and semicolon (;).  The example file above uses underscore group subset delimiters.
 
 ===3. Group Subset===
 Selects group subset to differentiate.  Using the example file above, each delimiter will differentiate the sequences by:
@@ -46,8 +46,6 @@ Selects group subset to differentiate.  Using the example file above, each delim
   # Genera
   # Species
   # strain
-
-You may find the [http://rdp.cme.msu.edu/classifier/classifier.jsp RDP classifier] useful in generating these subsets.
 
 ===4. Cutoff===
 This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination during T-RFLP.
@@ -66,16 +64,23 @@ The maximum number of results to return (helpful if you're lucky enough to have 
 
 The program makes a new directory for every run and inside the directory makes several files:
 
-    * a copy of the program
-    * a copy of the enzyme input file
-    * a copy of the sequence input file
-    * "enzmatrix.txt" This is the file used by the program to calculate the best enzymes. Each column contains a pair of groups, and each row contains the enzyme name. A zero indicates that the enzyme does not distinguish those groups from each other. A one indicated that the enzyme does distinguish those groups from each other. The $stringency setting specifies the fraction of ones that an enzyme must have to be acceptable.
-    * "finalout.txt" This is the final output which shows all of the successful enzyme groups. The upper part ("Enzyme Picker Key") is a key for the lower part. Each numbered group of enzymes distinguishes the same groups of sequences, so they are somewhat equivalent. Note that they do not give the same fragment lengths, they only distinguish the same groups (that is, they have the same pattern of ones and zeros in enzmatrix.txt). This greatly speeds up the calculations. The lower part "Enzyme sets..." has two parts: a score, and a set of enzymes. The score is the sum of the fractions of sequence groups discriminated by all of the enzymes, so a perfect score equals 4. (that is, it equals "the fraction of ones in enzmatrix.txt for Enzyme A" plus "the fraction of ones in enzmatrix.txt for Enzyme B" ... "Enzyme D"). Each enzyme listed is only the first member of the set from the upper part of the file, so choosing any other member of the same group will yield the same discriminatory abilities. Choose your enzyme based upon commercial availability, fragment lengths, etc.
-    * "fragfile.txt" This file shows the fragment lengths for each sequence and enzyme combination.
-    * "no_cuts.txt" This file lists the enzymes that don't cut/distinguish any of the groups.
-    * "success.txt" This file lists the enzymes that singlehandedly distinguish all of the groups.
-    * "yes_cuts.txt" These are enzymes that do cut/distinguish the groups with sufficient stringency. Deprecated. Used for debugging.
+===Enzymes.txt===
+The enzyme list used in the analysis
 
+===Enzmatrix.txt===
+This is the file used by the program to calculate the best enzymes. Each column contains a pair of groups, and each row contains the enzyme name. A zero indicates that the enzyme does not distinguish those groups from each other. A one indicated that the enzyme does distinguish those groups from each other. The $stringency setting specifies the fraction of ones that an enzyme must have to be acceptable.
+
+===Finalout.txt===
+This is the final output which shows all of the successful enzyme groups. The upper part ("Enzyme Picker Key") is a key for the lower part. Each numbered group of enzymes distinguishes the same groups of sequences, so they are somewhat equivalent. Note that they do not give the same fragment lengths, they only distinguish the same groups (that is, they have the same pattern of ones and zeros in enzmatrix.txt). This greatly speeds up the calculations. The lower part "Enzyme sets..." has two parts: a score, and a set of enzymes. The score is the sum of the fractions of sequence groups discriminated by all of the enzymes, so a perfect score equals 4. (that is, it equals "the fraction of ones in enzmatrix.txt for Enzyme A" plus "the fraction of ones in enzmatrix.txt for Enzyme B" ... "Enzyme D"). Each enzyme listed is only the first member of the set from the upper part of the file, so choosing any other member of the same group will yield the same discriminatory abilities. Choose your enzyme based upon commercial availability, fragment lengths, etc.
+
+===Fragfile.txt===
+This file shows the fragment lengths for each sequence and enzyme combination.
+
+===No_cuts.txt===
+This file lists the enzymes that don't cut/distinguish any of the groups.
+
+===Success.txt===
+This file lists the enzymes that singlehandedly distinguish all of the groups.
 
 
 ==REFERENCES==
@@ -90,7 +95,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
