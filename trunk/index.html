@@ -1,0 +1,52 @@
+<?php include("header_doctype.txt");?>
+<html>
+<head>
+
+<title>REpicker</title>
+<div id="formDiv">
+<h3>Restriction Enzyme Picker Online</h3>
+<h4><a href="REPK_FAQ.html">Read the Manual</a></h4>
+<form action="./repk_cgi_2z1.pl.cgi" method="post" name="dataform" method="post">
+<p>Enter your FASTA aligned sequences here:<br><TEXTAREA NAME="fasta" COLS=60 ROWS=10></TEXTAREA>
+<p><em>Group Subset Delimiter</em>
+<select name="splitter">
+<option value="_" SELECTED>_ (underscore)</option>
+<option value=";">; (semicolon)</option>
+</select>: the character used to separate groups in your FASTA sequence names
+
+<br><em>Group Subset</em>: <input type="text" name="splitnum" size=4 maxlength=4 value="1">: which group subset do you want separated out?
+<br><em>Cutoff</em>: <input type="text" name="cutoff" size=4 maxlength=4 value="5">: furthest apart two fragments can be in length and still be considered the same fragments
+
+<br><em>Stringency</em>: <input type="text" name="stringency" size=4 maxlength=4 value="0">: an enzyme must distinguish MORE than this percent of groups to be acceptable (<em>bug fixed</em>)
+
+<br><em>Min Fragment Lengths</em>: <input type="text" name="bpcutoff_low" size=4 maxlength=4 value="75">: shortest acceptable fragment (must be greater than <em>Cutoff</em>)
+
+<br><em>Max Fragment Lengths</em>: <input type="text" name="bpcutoff_high" size=4 maxlength=4 value="900">: longest acceptable fragment
+
+<br><em>Max Matches Returned</em>: <input type="text" name="matchlimit" size=4 maxlength=4 value="100">
+: the most number of matches to print out
+
+<p>Select the enzymes you would like to use (<a href="./enzymes_comm_iso.txt">only one for now</a>):<br>
+<select name="enzymes">
+<option value="enzymes_comm_iso" SELECTED>REBASE Commercially Available Enzymes</option>
+</select>
+
+<p><input type="submit" name="form_done" value="Submit Form">
+</form>
+</div>
+<br><br>
+<h4>Download Restriction Enzyme Picker Standalone</h4>
+Download the perl script here: <a href="./repk_zeta_2.pl">repk_zeta_2.pl</a>
+<br>To run it: adjust the variables as above: cutoff; stringency; bpcutoff_low; bpcutoff_high; matchlimit; splitter;
+<br>then type: <code>perl repk_zet_2.pl [alignment_file] [enzyme file]</code>
+<br>Here is an example input: <a href="./alignment.fasta">alignment.fasta</a>
+<br>Here is a short example enzyme file: <a href="./5enzymes.txt">5enzymes.txt</a>
+
+<br><br>
+<h4>Download Restriction Enzyme Picker Online</h4>
+email me: rec3141.at.gmail.com</body>
+</html>
+
+
+
+
