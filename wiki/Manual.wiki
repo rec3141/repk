@@ -4,11 +4,11 @@
 
 =REPK Manual=
 
-repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
+repk by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
 
 ==OVERVIEW==
 
-REPK (*R*estriction *E*ndonuclease *P*ic*k*er) finds sets of 4 commercially available restriction endonucleases which together uniquely differentiate user-designated sequence groups from a user-supplied FASTA format sequence file.  The user-defined sequences groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engebretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
+REPK (*R*estriction *E*ndonuclease *P*ic*k*er) finds sets of 4 commercially available restriction endonucleases which together uniquely differentiate user-designated sequence groups from a user-supplied FASTA format sequence file of _any gene_, not just 16S rRNA.  The user-defined sequences groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engebretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
 
 ==INPUTS==
 ===1. Multiple sequence alignment in FASTA format.===
@@ -37,7 +37,8 @@ AAACCGGTTGATCCTGCCGGACCTGACCGCTATCGGGGTGGGGCTAAGCC
 For now only the list from [http://rebase.neb.com/rebase/rebase.html REBASE] is available, in addition to a fake "no cut" enzyme.  Future possibilities will include user-defined and user-selected enzymes.
 
 ===2. Group Subset Delimiter===
-The character used to separate groups in your FASTA sequence names, current choices are underscore (`_`) and semicolon (;).  The example file above uses underscore group subset delimiters.
+
+The character used to separate groups in your FASTA sequence names, current choices are underscore (*_*) or pipe (*|*).  The example file above uses underscore group subset delimiters.  Default is underscore.
 
 ===3. Group Subset===
 Selects group subset to differentiate.  Using the example file above, each delimiter will differentiate the sequences by:
@@ -49,8 +50,10 @@ Selects group subset to differentiate.  Using the example file above, each delim
   # Species
   # strain
 
+For example, running the program with a 3 will search for enzymes that discriminate the different phyla in the dataset. If you want to to find enzymes that discriminate the different genera in the dataset, rerun using 5 as the group subset.
+
 ===4. Cutoff===
-This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination during T-RFLP.
+This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination during T-RFLP.  Default is 5.
 
 ===5. Stringency===
 an enzyme must distinguish MORE than this percent of groups to be acceptable (bug fixed)
@@ -103,6 +106,10 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
+
+
+
+
 
 
 
