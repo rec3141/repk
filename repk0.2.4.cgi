@@ -95,7 +95,7 @@ my $failfile = "./$timestring/no_cuts.txt";		# enzymes that do not cut/distingui
 my $matrixfile = "./$timestring/enzmatrix.txt";	# matrix of group combinations each passing enzyme cuts
 my $outfile = "./$timestring/finalout.txt";		# list of 4-enzyme groups that will identify all groups
 my $fragfile = "./$timestring/fragfile.txt";		# fragment sizes for each passing enzyme
-
+my $customfile = "./$timestring/custom.txt";
 
 ##### my $fragprintall = 1;	# set to 1 if all fragments are to be printed, not just the best, NOT YET INSTITUTED
 
@@ -132,11 +132,10 @@ my %sequences = readFASTAfile (%cgivars); #cgi $alignmentFile);
 @subs = checkGroups (%sequences);
 
 my $numgroups = @subs;
-print "numgroups = $numgroups\n<br>";
 my $numcombos = $numgroups*($numgroups-1)/2;
-print "numcombos = $numcombos\n<br>";
+print "PROCESSING: There are $numgroups groups and $numcombos group combinations\n<br>";
 my $maxfail = $numcombos - int($numcombos*$stringency);
-print "maxfail = $maxfail\n<br>";
+print "PROCESSING: The minimum allowable group discriminations is $maxfail\n<br>";
 
 my @grpgrp = groupGroups (@subs);
 my @revgrpgrp = reverse @grpgrp;
@@ -144,7 +143,7 @@ my @revgrpgrp = reverse @grpgrp;
 
 if (grep($_ =~ /allrebase/, @enzymesList)) {
 %enzymes = itsafile($enzymeFile);
-print((scalar keys %enzymes) . " enzymes read from <a href=\"$enzymeFile\">$enzymeFile</a>\n<br>");
+print "PROCESSING: ". (scalar keys %enzymes) . " enzymes were read from <a href=\"$enzymeFile\">$enzymeFile</a>\n<br>");
 }
 
 elsif (($_ !~ /allrebase/) && (defined @enzymesList))  {
@@ -152,14 +151,19 @@ elsif (($_ !~ /allrebase/) && (defined @enzymesList))  {
 my @justEnz;
 # print @enzymesList;
 foreach (@enzymesList) {my($just,$junk) = split('\t',$_); push(@justEnz,$just)}
-print scalar(@enzymesList) . " enzymes chosen from list:" . join(',',@justEnz) ."\n<br>";
+print "PROCESSING: ". scalar(@enzymesList) . " enzymes were chosen from the list (<a href=\"$customfile\">review them here</a>)\n<br>";
 }
 
 if ($enzymeFileCustom) {
 %customenzymes = itsacustom($enzymeFileCustom);
-print "custom enzymes = $enzymeFileCustom\n<br>";
+print "PROCESSING: ". (scalar keys %customenzymes) . " custom enzymes were used (<a href=\"$customfile\">review them here</a>)\n<br>";
 @enzymes{keys %customenzymes} = values %customenzymes;
 }
+
+open (CUSTOM, ">$customfile") or die "Couldn't open $customfile: $!";
+@allCust = @justCust . (keys %customenzymes);
+print CUSTOM join('\n',@allCust) ."\n";
+close CUSTOM or die "Couldn't close $customfile: $!";
 
 
 #   Groups distinguished by fewer than " . (scalar keys %enzymes) * $matrixwarning . " enzymes will be printed to screen.\n<br>");
@@ -467,7 +471,7 @@ print "<br>$combonumber sets of enzymes were found that distinguish $numgroups g
 
 # Print close of HTML file
 print <<EOF ;
-<h3>STOP</h3>
+<h3>DONE</h3>
 </body>
 </html>
 EOF
