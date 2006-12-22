@@ -1,28 +1,34 @@
 #summary REPK manual
-REPK HOW-TO
 
-repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
+
+REPK HOW-TO
+by Eric Collins (rec3141@gmail.com)
+
+repk written by Gabrielle Rocap and Eric Collins
 
 OVERVIEW
+--------
+REPK is a program to calculate the length of terminal restriction fragments for a given list of enzymes and compare the results among user-defined groups in order to choose four enzymes with the highest resolving power for the sequences in question.  It is most powerful when you know something about the community you are interested in.  Shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time --  to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engelbretson and Moyer, 200X).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
 
-REPK is a program to calculate the length of terminal restriction fragments for a given list of enzymes and compare the results among user-defined groups in order to choose four enzymes with the highest resolving power for the sequences in question. It is most powerful when you know something about the community you are interested in. Shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engelbretson and Moyer, 200X). However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
 
-HOW TO RUN IT
+HERE'S HOW TO RUN IT
+--------------------
 1) You must have Perl installed
-2) Name your sequence file alignment.fasta and your enzyme files enzymes.txt, place them in the same folder as REPK, and double-click the script file (repk_[version].pl)
+2) Name your sequence file alignment.fasta and your enzyme files enzymes.txt, place them in the same folder as REPICKER, and double-click the script file (repk_[version].pl)
 
 OR
 
 3) run the program from the command line
+	type: perl repk_[version].pl [alignment file] [enzyme file]
 
-type: perl repk_[version].pl [alignment file] [enzyme file]
+--If you know you have Perl installed but this doesn't work you may have to specify its location, e.g. "/usr/bin/perl repk_[version].pl"
+--The default file names are alignment.fasta and enzymes.txt, but you can specify your own filesnames.  If you specify the enzyme file then you must also specify the alignment file.  At the command line type
+	perl repk_delta.pl /path/to/YourSequenceFile.fasta /path/to/YourEnzymeFile.txt
 
-If you know you have Perl installed but this doesn't work you may have to specify its location, e.g. "/usr/bin/perl repk_[version].pl" --The default file names are alignment.fasta and enzymes.txt, but you can specify your own filesnames. If you specify the enzyme file then you must also specify the alignment file. At the command line type
-
-perl repk_delta.pl /path/to/YourSequenceFile.fasta /path/to/YourEnzymeFile.txt
 
 HOW TO MAKE IT WORK
-The first input ("alignment.fasta"/"YourSequenceFile.fasta") is a multiple sequence alignment in FASTA format, with all sequences beginning at the 5' end of your primer. The sequences should have no gaps, have Windows or Unix end-of-line formatting (see below for how to convert them), and have no whitespace in the taxa names. Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program. Sequence groups are coded as characters of the taxa name as separated by a delimiter, default value is an underscore "_". This variable is called $splitter. You can also adjust which substring (as delimited by your delimiter) to use for the analysis. Thus, one sequence can be composed of multiple groups, e.g. "GAM_Psmonas__Psychromonas_antarctica" and "GAM_Shnella__Shewanella_frigidimarina" would both be identified as belonging to the "GAM" group with variable $splitnum = 1, but as "Psmonas" and "Shnella" with $splitnum=2. An example file might look like this:
+-------------------
+The first input ("alignment.fasta"/"YourSequenceFile.fasta") is a multiple sequence alignment in FASTA format, with all sequences beginning at the 5' end of your primer.  The sequences should have no gaps, have Windows or Unix end-of-line formatting (see below for how to convert them), and have no whitespace in the taxa names.  Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program.  Sequence groups are coded as characters of the taxa name as separated by a delimiter, default value is an underscore "_".  This variable is called $splitter.  You can also adjust which substring (as delimited by your delimiter) to use for the analysis.  Thus, one sequence can be composed of multiple groups, e.g. "GAM_Psmonas__Psychromonas_antarctica" and "GAM_Shnella__Shewanella_frigidimarina" would both be identified as belonging to the "GAM" group with variable $splitnum = 1, but as "Psmonas" and "Shnella" with $splitnum=2.  An example file might look like this:
 
 >ALF_Roseobacter__Hyphomonas_jannaschiana;AJ227814
 XXXXXXXXXXXXXXXXXXXXXACGAACGCTGGCGGCAGGCCTAACACATGCAAGTCGAAC
@@ -34,9 +40,68 @@ GCACTCTTCGGAGTGAGCGGCGGACGGGTTAGTAACGCGTGGGAACATACCCTTTTCTAC
 .
 .
 
-The second input ("enzymes.txt"/"YourEnzymeFile.txt") is a tab-delimited text file with the restriction enzyme name and recognition site -- including cut site -- on each line, followed by the separator "ISO", followed by names of isoschizomers [check?], which should also be Windows- or Unix-formatted. Any of the standard nucleotide abbreviations can be used (A,C,T,G,N,X,B,D,H,V,K,Y,S,W,M,R). An example file containing all commercially available Type II restriction enzymes [with palindromic cut sites? check] from REBASE (the restriction enzyme database, http://rebase.neb.com) is included and starts like this:
+The second input ("enzymes.txt"/"YourEnzymeFile.txt") is a tab-delimited text file with the restriction enzyme name and recognition site -- including cut site -- on each line, followed by the separator "ISO", followed by names of isoschizomers [check?], which should also be Windows- or Unix-formatted.  Any of the standard nucleotide abbreviations can be used (A,C,T,G,N,X,B,D,H,V,K,Y,S,W,M,R).  An example file containing all commercially available Type II restriction enzymes [with palindromic cut sites? check] from REBASE (the restriction enzyme database, http://rebase.neb.com) is included and starts like this:
 
-AasI    GACNNNN^NNGTC   ISO     DrdI    DseDI                                   
-AatI    AGG^CCT ISO     Eco147I PceI    SseBI   StuI                    
-AatII   GACGT^C ISO                                                     
-Acc16I  TGC^GCA ISO     AviII   FspI    NsbI                            
+
+AasI	GACNNNN^NNGTC	ISO	DrdI	DseDI					
+AatI	AGG^CCT	ISO	Eco147I	PceI	SseBI	StuI			
+AatII	GACGT^C	ISO							
+Acc16I	TGC^GCA	ISO	AviII	FspI	NsbI				
+.
+.
+.
+
+END OF LINE PROBLEMS
+--------------------
+ The Unix program tr is used to translate between two sets of characters. Characters specified in one set are converted to the matching character in the second set. To convert a Mac OS text file to a Unix text file, enter at a Unix command line:
+
+  tr '\r' '\n' < macfile.txt > unixfile.txt
+
+You must use the single quotation marks for these commands to work.  The < and > are part of the command, too.  If you don't have "tr" then do a web search for "convert text file Unix YourOperatingSystemHere" to find out how to make it work.
+
+
+OPTIONS
+-------
+There are several variables you can change to make the program work better for you.
+
+$cutoff [= 5]
+This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment length.  This should be set considering such things as the amount of known variation in the sequences and the recognition site bug mentioned above.
+
+$stringency [= 0]
+This is the fraction of groups an enzyme must distinguish MORE than to be acceptable.  It is useful to increase this number (up to 1.0) if you get a lot of hits and the program takes a long time to execute.
+
+$bpcutoff_low [= 50]
+$bpcutoff_high [= 750]
+These are the shortest and longest fragment lengths that are acceptable.  You might change these depending on, for example, how long your PCR product is, how long of a sequence your sequencer can read accurately, the range of fragments that survive the cleanup and the presence of primers and primer dimers.  Any fragments longer than this won't be included in the analysis, but will be present in "fragfile.txt" with a NEGATIVE number.
+
+$splitter [= "_"]
+The taxa delimiter (see discussion above)
+
+$splitnum [= 1]
+The taxa to choose (see discussion above)
+
+OUTPUT FILES
+------------
+The program makes a new directory for every run and inside the directory makes several files:
+
+- a copy of the program
+- a copy of the enzyme input file
+- a copy of the sequence input file
+
+- "enzmatrix.txt"
+This is the file used by the program to calculate the best enzymes.  Each column contains a pair of groups, and each row contains the enzyme name.  A zero indicates that the enzyme does not distinguish those groups from each other.  A one indicated that the enzyme does distinguish those groups from each other.  The $stringency setting specifies the fraction of ones that an enzyme must have to be acceptable.
+
+- "finalout.txt"
+This is the final output which shows all of the successful enzyme groups.  The upper part ("Enzyme Picker Key") is a key for the lower part.  Each numbered group of enzymes distinguishes the same groups of sequences, so they are somewhat equivalent.  Note that they do not give the same fragment lengths, they only distinguish the same groups (that is, they have the same pattern of ones and zeros in enzmatrix.txt).  This greatly speeds up the calculations.  The lower part "Enzyme sets..." has two parts: a score, and a set of enzymes.  The score is the sum of the fractions of sequence groups discriminated by all of the enzymes, so a perfect score equals 4.  (that is, it equals "the fraction of ones in enzmatrix.txt for Enzyme A" plus "the fraction of ones in enzmatrix.txt for Enzyme B" ... "Enzyme D").  Each enzyme listed is only the first member of the set from the upper part of the file, so choosing any other member of the same group will yield the same discriminatory abilities.  Choose your enzyme based upon commercial availability, fragment lengths, etc.
+ 
+- "fragfile.txt"
+This file shows the fragment lengths for each sequence and enzyme combination.
+
+- "no_cuts.txt"
+This file lists the enzymes that don't cut/distinguish any of the groups.
+
+- "success.txt"
+This file lists the enzymes that singlehandedly distinguish all of the groups.
+
+- "yes_cuts.txt"
+These are enzymes that do cut/distinguish the groups with sufficient stringency.  Deprecated.  Used for debugging.
