@@ -18,12 +18,12 @@ All sequences should begin at the 5' end of your LABELED primer and end at the 3
 An example file might look like this:
 
 {{{
->ALF_Roseobacter__Hyphomonas_jannaschiana;AJ227814
-XXXXXXXXXXXXXXXXXXXXXACGAACGCTGGCGGCAGGCCTAACACATGCAAGTCGAAC
-GACATAGTGGCAGACGGGTGAGTAACGCGTGGGAACGTACCTTTCGCTACGGAATAGCTC
->ALF_Roseobacter__marine_alpha_proteobacterium_AS-26;AJ391187
-XXXXXXXXXXXXXXXXXXXXXACGAACGCTGGCGGCAGGCCTAACACATGCAAGTCGAGC
-GCACTCTTCGGAGTGAGCGGCGGACGGGTTAGTAACGCGTGGGAACATACCCTTTTCTAC
+>ARCH_EURY_PICRO_PICRO_Picrophilus_torridus_DSM9790
+ACTCCGGTTGATCCTGCCGGCGGCCACTGCTATCAAGTTCCGACTAAGCC
+>ARCH_EURY_TRMCC_PYROC_Pyrococcus_abyssi_GE5
+ATTCCGGTTGATCCTGCCGGAGGCCACTGCTATGGGGGTCCGACTAAGCC
+>ARCH_CREN_TMPTC_TMPRO_Thermoproteus_tenax
+AAACCGGTTGATCCTGCCGGACCTGACCGCTATCGGGGTGGGGCTAAGCC
 .
 .
 .
@@ -32,30 +32,35 @@ GCACTCTTCGGAGTGAGCGGCGGACGGGTTAGTAACGCGTGGGAACATACCCTTTTCTAC
 
 ==OPTIONS==
 ===1. Restriction endonucleases and cut sites===
-For now only the list from [http://rebase.neb.com/rebase/rebase.html REBASE] is available.  Future possibilities will include user-defined and user-selected enzymes.
+For now only the list from [http://rebase.neb.com/rebase/rebase.html REBASE] is available, in addition to a fake "no cut" enzyme.  Future possibilities will include user-defined and user-selected enzymes.
 
 ===2. Group Subset Delimiter===
-the character used to separate groups in your FASTA sequence names
+The character used to separate groups in your FASTA sequence names, current choices are underscore (_) and semicolon (;).  The example file above uses underscore group subset delimiters.
 
 ===3. Group Subset===
-which group subset do you want separated out?
+Selects group subset to differentiate.  Using the example file above, each delimiter will differentiate the sequences by:
+  # Domain
+  # Kingdom
+  # Phylum
+  # Order
+  # Genera
+  # Species
+  # strain
+
+You may find the [http://rdp.cme.msu.edu/classifier/classifier.jsp RDP classifier] useful in generating these subsets.
 
 ===4. Cutoff===
-furthest apart two fragments can be in length and still be considered the same fragments
-This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment length. This should be set considering such things as the amount of known variation in the sequences and the recognition site bug mentioned above.
+This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination during T-RFLP.
 
 ===5. Stringency===
 an enzyme must distinguish MORE than this percent of groups to be acceptable (bug fixed)
 This is the fraction of groups an enzyme must distinguish MORE than to be acceptable. It is useful to increase this number (up to 1.0) if you get a lot of hits and the program takes a long time to execute.
 
-
 ===6. Min/Max Fragment Lengths===
-shortest acceptable fragment (must be greater than Cutoff)
-These are the shortest and longest fragment lengths that are acceptable. You might change these depending on, for example, how long your PCR product is, how long of a sequence your sequencer can read accurately, the range of fragments that survive the cleanup and the presence of primers and primer dimers. Any fragments longer than this won't be included in the analysis, but will be present in "fragfile.txt" with a NEGATIVE number.
+The shortest and longest fragment lengths acceptable.  You might change these depending on, e.g. the length of your PCR product, the mimimum or maximum fragment length your capillary electrophoresis machine can read accurately, the range of fragment lengths that survive your cleanup procedure, or the presence of primers and primer dimers. Any fragments shorter or longer than this won't be included in the analysis, but will be present in the 'fragfile' output.
 
 ===7. Max Matches Returned===
-the most number of matches to print out
-
+The maximum number of results to return (helpful if you're lucky enough to have too many).  Will only return the highest ranking results.
 
 ==OUTPUTS==
 
