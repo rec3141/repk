@@ -1,12 +1,4 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
+#summary REPK manual
 REPK HOW-TO
 
 repk written by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
@@ -48,4 +40,3 @@ AasI    GACNNNN^NNGTC   ISO     DrdI    DseDI
 AatI    AGG^CCT ISO     Eco147I PceI    SseBI   StuI                    
 AatII   GACGT^C ISO                                                     
 Acc16I  TGC^GCA ISO     AviII   FspI    NsbI                            
-
