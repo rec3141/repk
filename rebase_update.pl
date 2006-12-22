@@ -97,3 +97,4 @@ print OUT "$enzkey\t$WeirdEnzymes{$enzkey}{'recsite'}\tISO\t$WeirdEnzymes{$enzke
 }
 close OUT or die "complete failure";
 
+

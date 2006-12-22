@@ -1,7 +1,8 @@
 #!/usr/local/bin/perl
-#-T
+# -Tw
 # use strict;
-$|++;
+use diagnostics;
+$|++; #forces a flush after every write or print on the currently selected output channel
 
 ##### program to calculate length of terminal restriction fragments 
 ##### for many enzymes and compare results among groups
@@ -18,17 +19,16 @@ $|++;
 ##### todo in _3, add ability to use custom cut sites (e.g. uncut)
 ##### todo in _i, add ability to set stringency for number of allowable misses per group
 
-#use strict;
 # use CGI::Carp qw(fatalsToBrowser);
 use File::Copy;	#a module necessary for copying files
-
+# use Data::Dumper;
 ######################
 ######################
 #####################
 
 
 # First, get the CGI variables into a list of strings
-%cgivars= &getcgivars ;
+my %cgivars= &getcgivars ;
 
 # Print the CGI response header, required for all HTML output
 # Note the extra \n, to send the blank line
@@ -40,10 +40,7 @@ print <<EOF ;
 <head><title>Repicker</title></head>
 <body>
 <h2>Results Page</h2>
-The script is not finished running until it says <h3>STOP</h3>
 <br>Open links into new tabs or save them to disk, but don't click directly on them or you'll cancel the run.
-<br>It might take a while, especially if it has been used frequently and given a lower priority by the server.
-<br>There is a downloadable script you can run locally on your own computer, go back to the main page to get it.
 <br><br>
 EOF
 
@@ -69,7 +66,7 @@ mkdir $timestring, 0755;
 
 ##### variables that can be set
 my $cutoff = $cgivars{'cutoff'}; #5;	##### furthest apart two fragments can be in length and still be considered the same fragments
-				##### could split up the cutoff into 2: one for INTERgroup, another for INTRAgroup
+	##### could split up the cutoff into 2: one for INTERgroup, another for INTRAgroup
 my $stringency = $cgivars{'stringency'}/100; #0.0; 	# an enzyme must distinguish MORE than this percentage of groups to be acceptable
 #my $matrixwarning = $cgivars{'matrixwarning'}; #0.1;# doesn't work, but should: display warning about groups that are cut by fewer than this fraction of enzymes
 my $bpcutoff_low = $cgivars{'bpcutoff_low'}; #75;	# shortest acceptable fragment
@@ -77,28 +74,21 @@ my $bpcutoff_high = $cgivars{'bpcutoff_high'}; #900;# longest acceptable fragmen
 my $matchlimit = $cgivars{'matchlimit'}; #100;	# the most number of matches we want printed
 my $splitter = $cgivars{'splitter'}; #"_";
 my $splitnum = $cgivars{'splitnum'} -1;
-
-
-##### use default filenames if none are provided on the command line
-# @ARGV[0] = "alignment.fasta" if length @ARGV[0] == 0;
-@ARGV[1] = "enzymes_comm_iso.txt" if length @ARGV[1] == 0;
+my $enzymeFileCustom = $cgivars{'enzymeFileCustom'} if (defined $cgivars{'enzymeFileCustom'}); #custom enzymes
+if (defined $cgivars{'enzyme_list'}) {
+ my $enzymeChosen = $cgivars{'enzyme_list'} ; #selected enzymes
+ @enzymesList = split("\0",$enzymeChosen);
+# print join('-',@enzymesList);
+}
 
 ##### input filenames
-# my $alignmentFile = @ARGV[0];			#"SequenceInputFile.fasta";
-my $enzymeFile = @ARGV[1];			#"EnzymeInputFile.txt";
+my $enzymeFile = 'enzymes_type2.txt';			#"EnzymeInputFile.txt";
 
-##### sets are (0,4),(5,5),(10,6),(15,6)
-# my $taxabid = 6;		#where group names begins (0 is first)
-# my $taxaeid = 6;		#how many characters is group name
-
-
-##### this program makes copies of the enzyme file, sequence alignment file, and itself to the results directory, for later consultation
+##### this program makes copies of the enzyme file and sequence alignment file
 #copy("$enzymeFile","./"."$timestring"."/");
 #copy("$alignmentFile","./"."$timestring"."/");
-#copy("$0","./"."$timestring"."/");	#$0 is the variable that holds the perl script's name
 
 # ##### output filenames
-# ##if you comment out use strict you can here comment out any output files you don't want printed
 my $yescutsfile = "./$timestring/yes_cuts.txt";		# enzymes that cut and meet stringency
 my $successfile = "./$timestring/success.txt";	# enzymes that distinguish all the groups
 my $failfile = "./$timestring/no_cuts.txt";		# enzymes that do not cut/distinguish any groups
@@ -122,6 +112,8 @@ my %matchlength;
 my %reverseEnzymes;
 my %isoschiz;
 my %goodcombo;
+my %enzymes;
+my %customenzymes;
 
 ##### variables that are printed out of scope
 my $listcount;
@@ -149,8 +141,27 @@ print "maxfail = $maxfail\n<br>";
 my @grpgrp = groupGroups (@subs);
 my @revgrpgrp = reverse @grpgrp;
 
-my %enzymes = readEnzymeFile ($enzymeFile);
+
+if (grep($_ =~ /allrebase/, @enzymesList)) {
+%enzymes = itsafile($enzymeFile);
 print((scalar keys %enzymes) . " enzymes read from <a href=\"$enzymeFile\">$enzymeFile</a>\n<br>");
+}
+
+elsif (($_ !~ /allrebase/) && (defined @enzymesList))  {
+%enzymes = itsachosen(@enzymesList);
+my @justEnz;
+# print @enzymesList;
+foreach (@enzymesList) {my($just,$junk) = split('\t',$_); push(@justEnz,$just)}
+print scalar(@enzymesList) . " enzymes chosen from list:" . join(',',@justEnz) ."\n<br>";
+}
+
+if ($enzymeFileCustom) {
+%customenzymes = itsacustom($enzymeFileCustom);
+print "custom enzymes = $enzymeFileCustom\n<br>";
+@enzymes{keys %customenzymes} = values %customenzymes;
+}
+
+
 #   Groups distinguished by fewer than " . (scalar keys %enzymes) * $matrixwarning . " enzymes will be printed to screen.\n<br>");
 
 my $enzhashsize = keys(%enzymes);
@@ -234,13 +245,13 @@ ENZYME:	foreach my $RE (sort (keys %enzymes)) {
 	CHECK:	foreach my $checkkey (sort (keys %fragments)) {  ##### first keys are sequence names
 # 		my $set_1 = substr ($checkkey, $taxabid, $taxaeid);  ##### pulls group name out of first sequence name
 		my @set_1array = split (/$splitter/, $checkkey);
-		my $set_1 = @set_1array[$splitnum];
+		my $set_1 = $set_1array[$splitnum];
 		
 		foreach my $fragtaxa (sort (keys %fragments)) {	##### second keys are sequence names
 			next if ($fragtaxa le $checkkey);			##### don't check the same taxa against itself or any less than it
 # 			my $set_2 = substr ($fragtaxa, $taxabid, $taxaeid);	##### pulls group name out of second sequence name
 			my @set_2array = split (/$splitter/, $fragtaxa);
-			my $set_2 = @set_2array[$splitnum];
+			my $set_2 = $set_2array[$splitnum];
 			next if ($seen{$set_1} =~ m/($set_2)/);		##### don't check again if it's already been flagged
 			my $lengthDifference =  abs ($fragments{$checkkey} - $fragments{$fragtaxa});	##### find the difference in length between fragments
 			
@@ -461,15 +472,6 @@ print <<EOF ;
 </html>
 EOF
 
-# <p>Your files are here:
-# <br><a href="./$timestring/finalout.txt">finalout.txt</a>: list of 4-enzyme groups that will identify all groups
-# <br><a href="./$timestring/success.txt">success.txt</a>: enzymes that distinguish all the groups
-# <br><a href="./$timestring/no_cuts.txt">no_cuts.txt</a>: enzymes that do not cut/distinguish any groups
-# <br><a href="./$timestring/enzmatrix.txt">enzmatrix.txt</a>: matrix of group combinations each passing enzyme cuts
-# <br><a href="./$timestring/fragfile.txt">fragfile.txt</a>: fragment sizes for each passing enzyme
-# <br><a href="./enzymes_comm_iso.txt">enzymes_comm_iso.txt</a>: the list of enzymes used for this analysis are all commercially available according to <a href="http://rebase.neb.com">REBASE</a>.
-
-
 exit ;
 
 
@@ -497,41 +499,65 @@ exit ;
 # subroutine readEnzymeFile takes a tab delimited text file and returns
 # a hash with enzyme name as a key and the recognition sequence as a value
 # convert recognition sequence from IUPAC ambiguity code to regex
+sub itsafile {
+my $inputFile = shift;
 
-sub readEnzymeFile {
-	my $inputFile = shift; 
-	my %enzymes;
-	open  (FH, $inputFile) or die "Couldn't open $inputFile: $!";
-	while (my $line =<FH>) {
-		$line =~ s/\r//;
-		chomp $line;
-		$line =~ m/ISO\t/;
-		my ($RE, $site) = split (/\t/, $line);
+open  (FH, $inputFile) or die "Couldn't open $inputFile: $!";
+my(@lines) = <FH>; # read file into list
+close FH or die "Couldn't close $inputFile: $!";
+my %fileHash = readEnzymeText(@lines);
+return %fileHash;
+}
+
+sub itsacustom {
+my $line = shift;
+my @lines = split(/\n/,$line);
+my %customHash = readEnzymeText(@lines);
+return %customHash
+}
+
+sub itsachosen {
+my %chosenAllHash = readEnzymeText(@_);
+# print Dumper %chosenAllHash;
+}
+
+
+
+# subroutine readEnzymeCustom takes a CGI textarea input and returns
+# a hash with enzyme name as a key and the recognition sequence as a value
+# convert recognition sequence from IUPAC ambiguity code to regex
+
+sub readEnzymeText {
+	my %enzymeSub;
+	foreach (@_) {
+# 	print "<br>loopy: $_";
+		s/\r//;
+		chomp;
+		my ($RE, $site) = split(/\s/);   #changed from \t to \s
 		
-		@{$isoschiz{$RE}} = split (/\t/,$');
-		##### find out how many bases to add or subtract to get correct fragment lengths
+		@{$isoschiz{$RE}} = split (/\s/,$'); #changed from \t to \s
+		##### finds out how many bases to add or subtract to get correct fragment lengths
 		if ($site =~ s/\^//) {
 			$cutlength{$RE} = length ($`);
-			$enzymes{$RE} = uc ($site);
+			$enzymeSub{$RE} = uc ($site);
 		}
 		
 		##### converts IUPAC code to regex
-		$enzymes{$RE} =~ s/N/[ATCG]/g;
-		$enzymes{$RE} =~ s/B/[TCG]/g;
-		$enzymes{$RE} =~ s/D/[ATG]/g;
-		$enzymes{$RE} =~ s/H/[ATC]/g;
-		$enzymes{$RE} =~ s/V/[ACG]/g;
-		$enzymes{$RE} =~ s/K/[GT]/g;
-		$enzymes{$RE} =~ s/Y/[CT]/g;
-		$enzymes{$RE} =~ s/S/[CG]/g;
-		$enzymes{$RE} =~ s/W/[AT]/g;
-		$enzymes{$RE} =~ s/M/[AC]/g;
-		$enzymes{$RE} =~ s/R/[AG]/g;
+		$enzymeSub{$RE} =~ s/N/[ATCG]/g;
+		$enzymeSub{$RE} =~ s/B/[TCG]/g;
+		$enzymeSub{$RE} =~ s/D/[ATG]/g;
+		$enzymeSub{$RE} =~ s/H/[ATC]/g;
+		$enzymeSub{$RE} =~ s/V/[ACG]/g;
+		$enzymeSub{$RE} =~ s/K/[GT]/g;
+		$enzymeSub{$RE} =~ s/Y/[CT]/g;
+		$enzymeSub{$RE} =~ s/S/[CG]/g;
+		$enzymeSub{$RE} =~ s/W/[AT]/g;
+		$enzymeSub{$RE} =~ s/M/[AC]/g;
+		$enzymeSub{$RE} =~ s/R/[AG]/g;
 
-	}
-	
-	close FH or die "Couldn't close $inputFile: $!";
-	return %enzymes;
+}
+
+	return %enzymeSub;
 }
 
 ##### subroutine readFASTAfile takes a txt file in FASTA format and returns
@@ -545,7 +571,7 @@ sub readFASTAfile {
 	
 	foreach (split("^", $cgivars{'fasta'})) {
 		
-		$line = sprintf("%s", $_);
+		my $line = sprintf("%s", $_);
 # 		print "<br>line $line";
 		$line =~ s/\r//;
 		chomp $line;
@@ -570,8 +596,8 @@ sub readFASTAfile {
 sub checkGroups {
 # 	my $subset = ();
 	foreach my $groupie (keys %sequences) {
-		@taxasplit = split (/$splitter/,$groupie);
-		my $grpid = @taxasplit[$splitnum];
+		my @taxasplit = split (/$splitter/,$groupie);
+		my $grpid = $taxasplit[$splitnum];
 # 		my $grpid = substr($groupie,$taxabid,$taxaeid);
 # 		next if ($subset =~ m/($grpid)/);
 		next if (grep(/^$grpid$/,@subs));
@@ -653,7 +679,7 @@ sub revMatrix {
 }
 
 #----------------- start of &getcgivars() module ----------------------
-# borrowed from the internet
+# by James Marshall (http://www.jmarshall.com/easy/cgi/hello.pl.txt)
 # Read all CGI vars into an associative array.
 # If multiple input fields have the same name, they are concatenated into
 #   one array element and delimited with the \0 character (which fails if
