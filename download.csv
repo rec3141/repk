@@ -1,0 +1,51 @@
+
+
+ 
+
+
+   
+
+
+Classifier: Naive Bayesian rRNA Classifier Version 1.0, November 2003
+Taxonomical Hierarchy: The nomenclatural taxonomy of Garrity and Lilburn, release 6.0
+Submit Date: Thu Dec 21 18:30:12 EST 2006
+Confidence threshold: 80%
+Symbol - after a sequence name indicates the results are obtained using reverse complement of that query sequence.
+Lineage: Root(35)
+Details:
+ARCH_EURY_PICRO_PICRO_Picrophilus_torridus_DSM_9790;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermoplasmata; 100%; Thermoplasmatales; 100%; Picrophilaceae; 100%; Picrophilus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_abyssi_GE5;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_abyssi_str_ST546;Z70246;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_furiosus;Pcfurios2;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_furiosus_DSM_3638;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_horikoshii_shinkaj_OT3;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_horikoshii_str_JA-1;Pchoriksh;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_horikoshii_str_OT3;AP000001;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_sp;Pcsp2;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Pyrococcus; 100%
+ARCH_EURY_TRMCC_PYROC_Pyrococcus_sp_str_KOD1;PcspKOD1;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_CREN_PYROD_PYDIC_Pyrodictium_occultum_str_PL-19_DSM_2709_TYPE;Pyroccult;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Desulfurococcales; 100%; Pyrodictiaceae; 100%; Pyrodictium; 100%
+ARCH_CREN_DSFCC_STAPH_Staphylothermus_achaiicus_str_P8(BK20S6-10-b1);AJ012645;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Desulfurococcales; 100%; Desulfurococcaceae; 100%; Staphylothermus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_acidocaldarius;Sulacald2;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_acidocaldarius_str_98-3_ATCC_33909_TYPE;Sulacalda;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_shibatae_str_B12_DSM_5389_TYPE;Sulshibat;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_solfataricus_P2;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_solfataricus_str_P1_DSM_1616_TYPE;Sulsolfa6;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_solfataricus_str_P1_DSM_1616_TYPE;Sulsolfat;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_tokodaii_strain_7;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 96%
+ARCH_CREN_SULFO_SLFLO_Sulfolobus_yangmingensis_str_YM;AB010957;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfolobus; 100%
+ARCH_CREN_SULFO_SLFSP_Sulfurisphaera_ohwakuensis_str_TA-1_IFO_15161_TYPE;Sfrohwaku;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Sulfolobales; 100%; Sulfolobaceae; 100%; Sulfurisphaera; 82%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_aegeaicus_str_P5(BK17S6-3-b2);AJ012643;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_barossii;U76535;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_celer_str_VU_13_DSM_2476_TYPE;Tcceler;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_fumicolans_str_ST557;Tcfumicol;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_hydrothermalis_str_AL662;Tchythrml;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_litoralis;Z70252;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_mexicalis_str_GY_869;Z75218;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_Rt3_str_Rt3;AF017455;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_sp_str_GE3;Z70245;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_EURY_TRMCC_TRMCC_Thermococcus_zilligii_str_AN1;U76534;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermococci; 100%; Thermococcales; 100%; Thermococcaceae; 100%; Thermococcus; 100%
+ARCH_CREN_TMFLC_TMFIL_Thermofilum_pendens_str_Hvv3_DSM_2475_TYPE;Tmfpenden;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Thermoproteales; 100%; Thermofilaceae; 100%; Thermofilum; 100%
+ARCH_EURY_TMPLA_TMPLA_Thermoplasma_acidophilum_str_122-1B2;Tplacidop;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermoplasmata; 100%; Thermoplasmatales; 100%; Thermoplasmataceae; 100%; Thermoplasma; 100%
+ARCH_EURY_TMPLA_TMPLA_Thermoplasma_volcanium_GSS1;  ; Root; 100%; Archaea; 100%; Euryarchaeota; 100%; Thermoplasmata; 100%; Thermoplasmatales; 100%; Thermoplasmataceae; 100%; Thermoplasma; 100%
+ARCH_CREN_TMPTC_TMPRO_Thermoproteus_tenax;Thptenax;  ; Root; 100%; Archaea; 100%; Crenarchaeota; 100%; Thermoprotei; 100%; Thermoproteales; 100%; Thermoproteaceae; 100%; Pyrobaculum; 100%
+
