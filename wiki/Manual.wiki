@@ -30,7 +30,8 @@ AAACCGGTTGATCCTGCCGGACCTGACCGCTATCGGGGTGGGGCTAAGCC
 .
 .
 }}}
-
+===2. Optional: RDP-Classifier output===
+This optional input allows you to use the output from [http://rdp.cme.msu.edu/classifier/ RDP-Classifier] to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here". 
 
 ==OPTIONS==
 ===1. Restriction endonucleases and cut sites===
@@ -64,9 +65,14 @@ The shortest and longest fragment lengths acceptable.  You might change these de
 ===7. Max Matches Returned===
 The maximum number of results to return (helpful if you're lucky enough to have too many).  Will only return the highest ranking results.  Default is 100.
 
+===8. Maximum Missing Groups ===
+The maximum number of groups allowed to be missed by each enzyme.  If this number is too large then it will return too many results and the program will fail.  USE CAREFULLY and as a last resort.
+
 ==OUTPUTS==
 
 The program makes a new directory for every run and writes several files inside which can be accessed for up to 48 hours by bookmarking the unique URL given on the Results page.
+
+===rdp output renamed===
 
 ===enzymes_type2.txt===
 The REBASE enzyme list, if used in the analysis
@@ -108,7 +114,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
