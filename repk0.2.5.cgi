@@ -19,12 +19,16 @@ $|++; #forces a flush after every write or print on the currently selected outpu
 ##### todo in _3, add ability to use custom cut sites (e.g. uncut)
 ##### todo in _i, add ability to set stringency for number of allowable misses per group
 
-# use CGI::Carp qw(fatalsToBrowser);
+use CGI::Carp qw(fatalsToBrowser);
 use File::Copy;	#a module necessary for copying files
-# use Data::Dumper;
+use Data::Dumper;
 ######################
 ######################
 #####################
+
+my($sec,$min,$hour,$day,$mon,$year,undef,undef,undef) = localtime time;$year += 1900;
+my $timestring = "RESULTS/REPK_"."$year$mon$day-$hour$min-$sec"; 
+mkdir($timestring, 0755);
 
 
 # First, get the CGI variables into a list of strings
@@ -40,8 +44,9 @@ print <<EOF ;
 <head><title>Repicker</title></head>
 <body>
 <h2>Results Page</h2>
-<br>Open links into new tabs or save them to disk, but don't click directly on them or you'll cancel the run.
-<br><br>
+<br>Links can be opened into new tabs or saved to disk by right-clicking,
+<br>but <em><b>do not click directly on the files</b></em> until the run is over.
+<br><br>You can access these files for up to 48 hours by bookmarking <a href="http://staff.washington.edu/rec3141/repk/$timestring/">this URL</a><br><br>
 EOF
 
 # Print the CGI variables sent by the user.
@@ -60,11 +65,8 @@ EOF
 #################
 
 
-my($sec,$min,$hour,$day,$mon,$year,undef,undef,undef) = localtime time;$year += 1900;
-my $timestring = "REPK_"."$year$mon$day-$hour$min-$sec"; 
-mkdir $timestring, 0755;
-
 ##### variables that can be set
+my $rdpinput = $cgivars{'rdpinput'}; #from RDP classifier
 my $cutoff = $cgivars{'cutoff'}; #5;	##### furthest apart two fragments can be in length and still be considered the same fragments
 	##### could split up the cutoff into 2: one for INTERgroup, another for INTRAgroup
 my $stringency = $cgivars{'stringency'}/100; #0.0; 	# an enzyme must distinguish MORE than this percentage of groups to be acceptable
@@ -95,7 +97,8 @@ my $failfile = "./$timestring/no_cuts.txt";		# enzymes that do not cut/distingui
 my $matrixfile = "./$timestring/enzmatrix.txt";	# matrix of group combinations each passing enzyme cuts
 my $outfile = "./$timestring/finalout.txt";		# list of 4-enzyme groups that will identify all groups
 my $fragfile = "./$timestring/fragfile.txt";		# fragment sizes for each passing enzyme
-my $customfile = "./$timestring/custom.txt";
+my $customfile = "./$timestring/custom.txt";	#custom enzymes used or chosen
+my $renamedfile = "./$timestring/renamed.fasta"; #renamed by RDP classifier
 
 ##### my $fragprintall = 1;	# set to 1 if all fragments are to be printed, not just the best, NOT YET INSTITUTED
 
@@ -115,6 +118,7 @@ my %goodcombo;
 my %enzymes;
 my %customenzymes;
 
+
 ##### variables that are printed out of scope
 my $listcount;
 my $partcount;
@@ -122,13 +126,25 @@ my @nocutters;
 my $combonumber=0;
 my %finalsave;
 my @subs;
+my @justEnz;
 # my @zerogroup;
 
-#######################    
+#######################
 ####### PART 1 ########  In which the fragments are cut with the enzymes, the terminal fragment lengths are saved,
 #######################  the groups are differentiated, evil is vanquished, and peace is brought to the entire galaxy.
 
+my @renamed = readRDPCfile ((split(/\n/, $rdpinput)));
 my %sequences = readFASTAfile (%cgivars); #cgi $alignmentFile);
+
+if ($rdpinput =~ m/Classifier/g) {
+ open (RENAMED, ">$renamedfile") or die "Couldn't open $renamedfile: $!";
+ foreach my $seqkey (sort {$a cmp $b} keys %sequences) {
+  print RENAMED ">$seqkey\n$sequences{$seqkey}\n";
+ }
+ close RENAMED or die "Couldn't close $renamedfile: $!";
+ print "PRINTED: Input sequences renamed by RDP-Classifier, <a href=\"./$timestring/renamed.fasta\">renamed.fasta</a>\n<br>";
+}
+
 @subs = checkGroups (%sequences);
 
 my $numgroups = @subs;
@@ -143,12 +159,12 @@ my @revgrpgrp = reverse @grpgrp;
 
 if (grep($_ =~ /allrebase/, @enzymesList)) {
 %enzymes = itsafile($enzymeFile);
-print "PROCESSING: ". (scalar keys %enzymes) . " enzymes were read from <a href=\"$enzymeFile\">$enzymeFile</a>\n<br>");
+print "PROCESSING: ". (scalar keys %enzymes) . " enzymes were read from <a href=\"$enzymeFile\">$enzymeFile</a>\n<br>";
 }
 
 elsif (($_ !~ /allrebase/) && (defined @enzymesList))  {
 %enzymes = itsachosen(@enzymesList);
-my @justEnz;
+
 # print @enzymesList;
 foreach (@enzymesList) {my($just,$junk) = split('\t',$_); push(@justEnz,$just)}
 print "PROCESSING: ". scalar(@enzymesList) . " enzymes were chosen from the list (<a href=\"$customfile\">review them here</a>)\n<br>";
@@ -161,13 +177,13 @@ print "PROCESSING: ". (scalar keys %customenzymes) . " custom enzymes were used 
 }
 
 open (CUSTOM, ">$customfile") or die "Couldn't open $customfile: $!";
-@allCust = @justCust . (keys %customenzymes);
-print CUSTOM join('\n',@allCust) ."\n";
+print CUSTOM join("\n",(@justEnz ,(keys %customenzymes))) ."\n";
 close CUSTOM or die "Couldn't close $customfile: $!";
 
 
 #   Groups distinguished by fewer than " . (scalar keys %enzymes) * $matrixwarning . " enzymes will be printed to screen.\n<br>");
 
+print "PROCESSING: Enzymes left to test ";
 my $enzhashsize = keys(%enzymes);
 ENZYME:	foreach my $RE (sort (keys %enzymes)) {
 # 	print "testing $RE\n";  #####\t$enzymes{$RE}\t$reverseEnzymes{$RE}\t$cutlength{$RE}\n";
@@ -324,8 +340,8 @@ if ($successfile) {
 	}
 	close SUCCESS or die "Couldn't close $successfile: $!";
 }
-print ("<br>" . scalar keys %success);
-print(" singly successful enzymes printed: <a href=\"./$timestring/success.txt\">success.txt</a>: enzymes that distinguish all the groups.\n<br>");
+print "\n<br>RESULTS: There were " . (scalar keys %success) . " singly successful enzymes (enzymes that distinguish all the groups).\n<br>";
+print "PRINTED: <a href=\"./$timestring/success.txt\">success.txt</a>\n<br>" if (scalar keys %success);
 
 
 ##### print to file the loser enzymes that didn't cut or didn't distinguish at all
@@ -334,7 +350,8 @@ open (FAILURE, ">$failfile") or die "Couldn't open $failfile: $!";
 print FAILURE "The following enzymes did not cut/distinguish in the region between $bpcutoff_low and $bpcutoff_high\n" . join "\n",(sort @nocutters);
 close FAILURE or die "Couldn't open $failfile: $!";
 }
-print scalar @nocutters ." enzymes did not cut/distinguish in the region between $bpcutoff_low and $bpcutoff_high bp.  Print to <a href=\"./$timestring/no_cuts.txt\">no_cuts.txt</a>: enzymes that either do not cut or distinguish any groups\n<br>";
+print "RESULTS: There were " . scalar @nocutters ." enzymes that did not cut or distinguish any groups in the region between $bpcutoff_low and $bpcutoff_high bp.\n<br>";
+print "PRINTED: <a href=\"./$timestring/no_cuts.txt\">no_cuts.txt</a>\n<br>" if (@nocutters);
 
 
 ##### print to file the enzymes that cut and distinguished
@@ -350,7 +367,7 @@ if ($yescutsfile) {
 	}
 close YESCUTS or die "Couldn't close $yescutsfile: $!";
 }
-print "$partcount enzymes differentiate >" . (100*$stringency). "\% (".($numcombos-$maxfail) . ") group combinations, " . eval{$listcount - $partcount} . " enzymes do not.\n<br>";
+print "RESULTS: There were $partcount enzymes that differentiated >" . (100*$stringency). "\% (".($numcombos-$maxfail) . ") of the group combinations, " . eval{$listcount - $partcount} . " enzymes did not.\n<br>";
 
 ##### print fragment lengths to file
 if ($fragfile) {
@@ -366,15 +383,7 @@ if ($fragfile) {
 	}
 close FRAGS or die "Couldn't close $fragfile: $!";
 }
-print "Fragments printed:<a href=\"./$timestring/fragfile.txt\">fragfile.txt</a>: fragment sizes for all enzymes\n<br>";
-
-
-
-
-
-
-
-
+print "PRINTED: Terminal restriction fragment lengths with all enzymes, <a href=\"./$timestring/fragfile.txt\">fragfile.txt</a>\n<br>";
 
 
 
@@ -383,50 +392,52 @@ print "Fragments printed:<a href=\"./$timestring/fragfile.txt\">fragfile.txt</a>
 #######################  the best group of four enzymes comes out victorious.
 
 my %zlist = matrixMaker (%partlist);
-print "Enzyme match matrix printed:<a href=\"./$timestring/enzmatrix.txt\">enzmatrix.txt</a>: matrix of group combinations each passing enzyme cuts\n<br>";
 
+print "PRINTED: Enzyme match matrix, <a href=\"./$timestring/enzmatrix.txt\">enzmatrix.txt</a>\n<br>";
+print "PROCESSING: Enzymes left to test ";
 # die "No enzyme groups will succeed because " . (join " and ",@zerogroup) . " are not discriminated by any enzymes\n" if (@zerogroup);
 my %rev_groups = revMatrix (%zlist);
+# print Dumper %rev_groups;
+
 my $matchstring = 1 x $numcombos;
 my $countprint = 1;
 my $countprint2 = 1;
 my $hashsize = keys(%rev_groups);
-foreach my $dec_1 (sort {$a cmp $b} (keys %rev_groups)) {
-		$hashsize--;
-		if (($hashsize % 5) == 0) {print ("$hashsize")}
-		else {print "."}
-	foreach my $dec_2 (sort {$a cmp $b} (keys %rev_groups)) {
-		next if $dec_2 le $dec_1;
-		foreach my $dec_3 (sort {$a cmp $b} (keys %rev_groups)) {
-			next if $dec_3 le $dec_2;
-			foreach my $dec_4 (sort {$a cmp $b} (keys %rev_groups)) {
-				next if $dec_4 le $dec_3;
-				my $compare = ("$dec_1" | "$dec_2" | "$dec_3" | "$dec_4");
-				my @goodsum = ($dec_1)=~ m/1/gi;    ### switch to tr// trick??
-				push @goodsum,($dec_2)=~ m/1/gi;
-				push @goodsum,($dec_3)=~ m/1/gi;
-				push @goodsum,($dec_4) =~ m/1/gi;
-				if ($compare eq $matchstring) {
-					
-					$combonumber++;
-					push @{$goodcombo{$combonumber}},($rev_groups{$dec_1}[0],$rev_groups{$dec_2}[0],$rev_groups{$dec_3}[0],$rev_groups{$dec_4}[0]);
-					$finalsave{$combonumber} = scalar @goodsum;
-					
-					
-					
-				}
-			}
-		}		
-	}
+
+my @keylist;
+for my $k1 (sort {$a cmp $b} keys %rev_groups) {
+push(@keylist,$k1);
+# print "keys: " . join("\t",@keylist) . "\n";
+}
+
+for my $i (0..$#keylist-3) { 
+ $hashsize--;
+ (($hashsize % 5) == 0) ? print("$hashsize") : print(".");
+ for my $j ($i+1..$#keylist-2) {
+  for my $k ($j+1..$#keylist-1) {
+   for my $l ($k+1..$#keylist) {
+	my $newcompare = ("$keylist[$i]" | "$keylist[$j]" | "$keylist[$k]" | "$keylist[$l]");
+	my @goodsum = ($keylist[$i] =~ tr/1//);
+	push @goodsum,(($keylist[$j])=~ tr/1//);
+	push @goodsum,(($keylist[$k])=~ tr/1//);
+	push @goodsum,(($keylist[$l])=~ tr/1//);
+
+	if ($newcompare eq $matchstring) {
+	 $combonumber++;
+	 push @{$goodcombo{$combonumber}},($rev_groups{$keylist[$i]}[0],$rev_groups{$keylist[$j]}[0],$rev_groups{$keylist[$k]}[0],$rev_groups{$keylist[$l]}[0]);
+	 $finalsave{$combonumber} = scalar @goodsum;
+	} 
+   }
+  }
+ }
 }
 
 if ($outfile) {
 	open (OUT, ">$outfile") or die "Couldn't open $outfile: $!";
 	print OUT "ENZYME PICKER KEY\nGroup Members\n\n";
 	my %tetragroups;
-	my $tetracount; 
 	my $matchnumber;
-	
+	my $tetracount; 
 	foreach my $printkey (keys %rev_groups) {
 		$tetracount++;
 		#####to print out isoschizimers
@@ -463,11 +474,12 @@ if ($outfile) {
 	close OUT or die "Couldn't close $outfile: $!";
 }
 
-print "<br>$combonumber sets of enzymes were found that distinguish $numgroups groups.  The top $matchlimit were printed: <a href=\"./$timestring/finalout.txt\">finalout.txt</a>: list of 4-enzyme groups that will identify all groups\n<br>";
+print "<br>RESULTS: There were $combonumber sets of enzymes found that distinguished $numgroups groups.\n<br>";
+print "PRINTED: The top $matchlimit combinations, <a href=\"./$timestring/finalout.txt\">finalout.txt</a>\n<br>";
+
+
 
 #####	___END MAIN___
-
-
 
 # Print close of HTML file
 print <<EOF ;
@@ -564,6 +576,23 @@ sub readEnzymeText {
 	return %enzymeSub;
 }
 
+sub readRDPCfile {
+
+foreach(@_) {
+# print "loopy: $_\n";
+  if (m/Root;/) {
+   (my $sequence,my $results) = split(/Root;\s+[0-9]{2,3}[\%];/); # 'Root; 100%;'
+   while ($sequence =~ s/\W;[;\s]$//) {chop ($sequence)}
+   chop $sequence;
+   my @taxa = split(/;/, $results);
+   grep(s/\s*// =~ $_, @taxa);
+   push(@renamed, join('_',(@taxa[0,2,4,6,8,10], $sequence)));
+  }
+ }
+return @renamed
+}
+
+
 ##### subroutine readFASTAfile takes a txt file in FASTA format and returns
 ##### a hash with each strain as a key and the uppercase sequence as a value
 
@@ -579,8 +608,7 @@ sub readFASTAfile {
 # 		print "<br>line $line";
 		$line =~ s/\r//;
 		chomp $line;
-		if ($line =~ m/^>/) {
-		  	$fastataxa=$';
+		if ($line =~ m/^>/) { (@renamed) ? ($fastataxa=pop(@renamed)) : ($fastataxa=$');
 		}
 		elsif ($line =~ m/^\s$/) {
 			next;
@@ -655,6 +683,7 @@ foreach my $enzgroup (sort (keys %partlist)) {
 	}
 	
 close MATRIX or die "Couldn't close $matrixfile: $!";
+# print Dumper %zlist;
 return %zlist;
 }
 
