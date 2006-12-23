@@ -37,36 +37,47 @@ This optional input allows you to use the output from [http://rdp.cme.msu.edu/cl
 ===1. Restriction endonucleases and cut sites===
 For now only the list from [http://rebase.neb.com/rebase/rebase.html REBASE] is available, in addition to a fake "no cut" enzyme.  Future possibilities will include user-defined and user-selected enzymes.
 
+
+
 ===2. Group Subset Delimiter===
 
 The character used to separate groups in your FASTA sequence names, current choices are underscore (*_*) or pipe (*|*).  The example file above uses underscore group subset delimiters.  Default is underscore.
 
 ===3. Group Subset===
-Selects group subset to differentiate.  Using the example file above, each delimiter will differentiate the sequences by:
-  # Domain
-  # Kingdom
-  # Phylum
-  # Order
-  # Genera
+Selects group subset to differentiate.
+Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
+  # Genus
   # Species
   # strain
 
-For example, running the program with a 3 will search for enzymes that discriminate the different phyla in the dataset. If you want to to find enzymes that discriminate the different genera in the dataset, rerun using 5 as the group subset.  Default is 1.
+Using the example file above with the example RDP-Classifier file , each delimiter will differentiate the sequences by:
+  # Domain
+  # Phylum
+  # Class
+  # Order
+  # Family
+  # Genus
+  # Genus (again)
+  # Species
+  # strain
+
+In this example, running the program with a 6 will search for enzymes that discriminate the different Families in the dataset. If you want to to find enzymes that discriminate the different Families in the dataset, rerun using 5 as the group subset.  Default is 1.
+
 
 ===4. Cutoff===
-This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination during T-RFLP.  Default is 5.
+This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination by your capillary electrophoresis machine or gel sequencer.  Default is 5.
 
-===5. Stringency===
-An individual enzyme must distinguish MORE than this percent of groups to be acceptable.  It is useful to increase this number (up to 100) if you get a lot of hits and the program takes a long time to execute.  Default is 50.
-
-===6. Min/Max Fragment Lengths===
+===5. Min/Max Fragment Lengths===
 The shortest and longest fragment lengths acceptable.  You might change these depending on, e.g. the length of your PCR product, the mimimum or maximum fragment length your capillary electrophoresis machine can read accurately, the range of fragment lengths that survive your cleanup procedure, or the presence of primers and primer dimers. Any fragments shorter or longer than this won't be included in the analysis, but will be present in the 'fragfile' output.  Defaults are 75 and 900.
 
-===7. Max Matches Returned===
-The maximum number of results to return (helpful if you're lucky enough to have too many).  Will only return the highest ranking results.  Default is 100.
+===6. Stringency===
+An individual enzyme must distinguish MORE than this percent of groups to be acceptable.  It is useful to increase this number (up to 100) if you get a lot of hits and the program takes a long time to execute or gives an error.  Default is 0.  Change this first if you find too many enzymes.
 
-===8. Maximum Missing Groups ===
+===7. Maximum Missing Groups ===
 The maximum number of groups allowed to be missed by each enzyme.  If this number is too large then it will return too many results and the program will fail.  USE CAREFULLY and as a last resort.
+
+===8. Max Matches Returned===
+The maximum number of results to return (helpful if you're lucky enough to have too many).  Will only return the highest ranking results.  Default is 100.
 
 ==OUTPUTS==
 
@@ -114,7 +125,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
