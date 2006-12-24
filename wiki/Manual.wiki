@@ -45,6 +45,7 @@ The character used to separate groups in your FASTA sequence names, current choi
 
 ===3. Group Subset===
 Selects group subset to differentiate.
+
 Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
   # Genus
   # Species
@@ -77,19 +78,20 @@ An individual enzyme must distinguish MORE than this percent of groups to be acc
 The maximum number of groups allowed to be missed by each enzyme.  If this number is too large then it will return too many results and the program will fail.  USE CAREFULLY and as a last resort.
 
 ===8. Max Matches Returned===
-The maximum number of results to return (helpful if you're lucky enough to have too many).  Will only return the highest ranking results.  Default is 100.
+The maximum number of results to return, up to 10000.  Will only return the highest ranking results.  Default is 100.
 
 ==OUTPUTS==
 
 The program makes a new directory for every run and writes several files inside which can be accessed for up to 48 hours by bookmarking the unique URL given on the Results page.
 
-===rdp output renamed===
+===renamed.fasta===
+Only if RDP-Classifier output was used, this is the input file with sequences renamed by RDP-Classifier.
 
 ===enzymes_type2.txt===
 The REBASE enzyme list, if used in the analysis
 
 ===custom.txt===
-The list of enzymes used in the analysis if selected from REBASE list or manually inputted.
+The list of enzymes used in the analysis if selected from REBASE list or manually inputted, if any were selected.
 
 ===success.txt===
 This file lists the enzymes that singlehandedly distinguish all of the groups.
@@ -112,6 +114,8 @@ This is the final output which shows all of the successful enzyme groups.
   * Enzyme sets: each enzyme listed is only the first member of the set from "Enzyme Picker Key", so choosing any other member of the same group will yield the same discriminatory abilities.
     * Choose your enzyme based upon price, fragment lengths, whatever.
 
+===missingout.txt===
+Same as finalout.txt but with the partially successful enzyme groups.
 
 ==REFERENCES==
 Cole JR, Chai B, Farris RJ, Wang Q, Kulam SA, McGarrell DM, Garrity GM, Tiedje JM. The Ribosomal Database Project (RDP-II): sequences and tools for high-throughput rRNA analysis. Nucleic Acids Research 2005 Jan 1;33(Database Issue):D294-D296. doi: 10.1093/nar/gki038.
@@ -125,7 +129,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
