@@ -20,16 +20,14 @@ All sequences should begin at the 5' end of your LABELED primer and end at the 3
 An example file might look like this:
 
 {{{
->ARCH_EURY_PICRO_PICRO_Picrophilus_torridus_DSM9790
-ACTCCGGTTGATCCTGCCGGCGGCCACTGCTATCAAGTTCCGACTAAGCC
->ARCH_EURY_TRMCC_PYROC_Pyrococcus_abyssi_GE5
+>Pyrococcus_abyssi_GE5
 ATTCCGGTTGATCCTGCCGGAGGCCACTGCTATGGGGGTCCGACTAAGCC
->ARCH_CREN_TMPTC_TMPRO_Thermoproteus_tenax
-AAACCGGTTGATCCTGCCGGACCTGACCGCTATCGGGGTGGGGCTAAGCC
-.
-.
-.
+>Pyrodictium_occultum_strPL-19_DSM_2709_TYPE
+ACTCCGGTTGATCCTGCCGGGCCCGACCGCTATCGGGGTGGGACTAAGCC
+>Staphylothermus_achaiicus_strP8(BK20S6-10-b1)
+xTTCCGGTTGATCCTGCCGGACCCGACCGCTATCGGGGTGGGGCTAAGCC
 }}}
+
 ===2. Optional: RDP-Classifier output===
 This optional input allows you to use the output from [http://rdp.cme.msu.edu/classifier/ RDP-Classifier] to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here". 
 
@@ -129,7 +127,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
