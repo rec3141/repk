@@ -65,13 +65,13 @@ Enter any custom enzymes you would like to use in the following format (where ^ 
 <p><em>Min Fragment Lengths</em>: <input type="text" name="bpcutoff_low" size=4 maxlength=4 value="75">: shortest acceptable fragment (must be greater than <em>Cutoff</em>)
 <p><em>Max Fragment Lengths</em>: <input type="text" name="bpcutoff_high" size=4 maxlength=4 value="900">: longest acceptable fragment
 <p><em>Stringency</em>: <input type="text" name="stringency" size=4 maxlength=4 value="0">: an enzyme must distinguish MORE than this percent of groups to be acceptable
-<p><em>Max Mismatches</em>: <input type="text" name="mismatches" size=4 maxlength=2 value="0">: the number of allowable group mismatches
+<p><em>Max Missing Groups</em>: <input type="text" name="mismatches" size=4 maxlength=2 value="0">: the number of missing groups allowed
 <p><em>Max Matches Returned</em>: <input type="text" name="matchlimit" size=4 maxlength=4 value="100">: the most number of matches to print out (maximum 1000)
 
 <p><input type="submit" name="form_done" value="Submit Form">
 <br>
 <p><em><b>OPTIONAL</b></em> -- Enter your RDP Classifier output file here -- <em><b>OPTIONAL</b></em>
-<br>(Here is an example input file: <a href="./rdpdownload.4.txt">rdpdownload.4.txt</a> or generate your own here: <a href="http://rdp.cme.msu.edu/classifier/index.jsp">RDP-Classifier</a>)<br>
+<br>(Here is an example input file: <a href="./rdpdownload.4.txt">rdpdownload.4.txt</a> or generate your own here: <a href="http://rdp.cme.msu.edu/classifier/">RDP-Classifier</a>)<br>
 
 <TEXTAREA NAME="rdpinput" COLS=90 ROWS=10></TEXTAREA>
 <br>
