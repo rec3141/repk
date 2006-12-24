@@ -6,6 +6,8 @@
 
 repk by Gabrielle Rocap and Eric Collins (rec3141.at.gmail.com)
 
+
+
 ==OVERVIEW==
 
 REPK (*R*estriction *E*ndonuclease *P*ic*k*er) finds sets of 4 commercially available restriction endonucleases which together uniquely differentiate user-designated sequence groups from a user-supplied FASTA format sequence file of _any gene_, not just 16S rRNA.  The user-defined sequences groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engebretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
@@ -31,15 +33,18 @@ xTTCCGGTTGATCCTGCCGGACCCGACCGCTATCGGGGTGGGGCTAAGCC
 ===2. Optional: RDP-Classifier output===
 This optional input allows you to use the output from [http://rdp.cme.msu.edu/classifier/ RDP-Classifier] to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here". 
 
+
+
+
 ==OPTIONS==
 ===1. Restriction endonucleases and cut sites===
 All commercially available TypeII restriction endonucleases (with [http://repk.googlecode.com/files/enzymes_weird_612.txt some exceptions]) from [http://rebase.neb.com/rebase/rebase.html REBASE] are available ([http://repk.googlecode.com/files/enzymes_type2_612.txt see them here]).  You can use all of them, some of them, or none of them.  A custom enzyme (or list of enzymes) can be entered as well, e.g. a fake "no cut" enzyme.
 
-  * _TIP_ For example, the easiest way to use a subset of the REBASE list is to open the plaintext file and remove the lines you do not want to include, then paste the rest into the Custom enzyme box.
+  * _TIP_ The easiest way to use a subset of the REBASE list is to open the plaintext file and remove the lines you do not want to include, then paste the rest into the Custom enzyme box.
 
 ===2. Group Subset Delimiter===
 
-The character used to separate groups in your FASTA sequence names, current choices are underscore (*_*) or pipe (*|*).  The example file above uses underscore group subset delimiters.  Default is underscore.
+The character used to separate groups in your FASTA sequence names, current choices are underscore (*{{{_}}}*) or pipe (*|*).  The example file above uses underscore group subset delimiters.  Default is underscore.
 
 ===3. Group Subset===
 Selects group subset to differentiate.
@@ -70,13 +75,16 @@ This is the furthest apart (in basepairs) that two fragments can be in length an
 The shortest and longest fragment lengths acceptable.  You might change these depending on, e.g. the length of your PCR product, the mimimum or maximum fragment length your capillary electrophoresis machine can read accurately, the range of fragment lengths that survive your cleanup procedure, or the presence of primers and primer dimers. Any fragments shorter or longer than this won't be included in the analysis, but will be present in the 'fragfile' output.  Defaults are 75 and 900.
 
 ===6. Stringency===
-An individual enzyme must distinguish MORE than this percent of groups to be acceptable.  It is useful to increase this number (up to 100) if you get a lot of hits and the program takes a long time to execute or gives an error.  Default is 0.  Change this first if you find too many enzymes.
+An individual enzyme must distinguish MORE than this percent of groups to be acceptable.  It is useful to increase this number (up to 100) if you get a lot of hits and the program takes a long time to execute or gives an error.  Change this first if you find too many enzymes.  Default is 0.
 
 ===7. Maximum Missing Groups ===
-The maximum number of groups allowed to be missed by each enzyme.  If this number is too large then it will return too many results and the program will fail.  USE CAREFULLY and as a last resort.
+The maximum number of groups allowed to be missed by each enzyme.  If this number is too large then it will return too many results and the program will fail.  Use carefully.  Default is 0.
 
 ===8. Max Matches Returned===
 The maximum number of results to return, up to 10000.  Will only return the highest ranking results.  Default is 100.
+
+
+
 
 ==OUTPUTS==
 
@@ -115,6 +123,19 @@ This is the final output which shows all of the successful enzyme groups.
 ===missingout.txt===
 Same as finalout.txt but with the partially successful enzyme groups.
 
+
+==HINTS AND TIPS==
+===Too few enzymes===
+  * Decrease the stringency if possible.
+  * Re-examine the groups you are trying to differentiate, check to see if there are any groups that are not differentiable at all (check out enzmatrix.txt)
+  * Re-examine the cutoff: lowering it will probably give more fragments that could be used to differentiate groups, but could also separate groups that are really the same.
+  * Re-examine the min/max fragment lengths: allowing more lengths might allow more different fragments.
+  * Increase the number of missing groups allowed.
+
+===Too many enzymes===
+  * Increase the stringency
+  * Decrease the number of missing groups allowed.
+
 ==REFERENCES==
 Cole JR, Chai B, Farris RJ, Wang Q, Kulam SA, McGarrell DM, Garrity GM, Tiedje JM. The Ribosomal Database Project (RDP-II): sequences and tools for high-throughput rRNA analysis. Nucleic Acids Research 2005 Jan 1;33(Database Issue):D294-D296. doi: 10.1093/nar/gki038.
 
@@ -127,6 +148,7 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
+
 
 
 
