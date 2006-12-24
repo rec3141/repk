@@ -1,5 +1,5 @@
 #summary Weird enzymes not included in REPK
-
+{{{
 AarI    CACCTGC(4/8)    ISO
 AciI    CCGC(-3/-1)     ISO     BspACI  SsiI
 AjuI    (7/12)GAANNNNNNNTTGG(11/6)      ISO
@@ -62,3 +62,4 @@ TsoI    TARCCA(11/9)    ISO
 TspDTI  ATGAA(11/9)     ISO
 TspGWI  ACGGA(11/9)     ISO
 TstI    (8/13)CACNNNNNNTCC(12/7)        ISO
+}}}
