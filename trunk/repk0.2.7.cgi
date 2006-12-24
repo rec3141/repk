@@ -85,11 +85,16 @@ my $usermatchlimit = $matchlimit;
 my $splitter = $cgivars{'splitter'}; #"_";
 my $splitnum = $cgivars{'splitnum'} -1;
 my $enzymeFileCustom = $cgivars{'enzymeFileCustom'} if (defined $cgivars{'enzymeFileCustom'}); #custom enzymes
-if (defined $cgivars{'enzyme_list'}) {
+if ((defined $cgivars{'enzyme_list'}) && ($cgivars{'enzyme_list'} ne 'norebase')) {
+
  my $enzymeChosen = $cgivars{'enzyme_list'} ; #selected enzymes
  @enzymesList = split("\0",$enzymeChosen);
+grep{s/norebase//} @enzymesList;
 # print join('-',@enzymesList);
 }
+else {print "<br>PROCESSING: <em>NO ENZYMES CHOSEN" and exit unless $enzymeFileCustom}
+
+
 my $mismatches = $cgivars{'mismatches'};
 
 ##### input filenames
@@ -108,7 +113,7 @@ my $outfile = "./$timestring/finalout.txt";		# list of 4-enzyme groups that will
 my $fragfile = "./$timestring/fragfile.csv";		# fragment sizes for each passing enzyme
 my $customfile = "./$timestring/custom.txt";	#custom enzymes used or chosen
 my $renamedfile = "./$timestring/renamed.fasta"; #renamed by RDP classifier
-my $useroutfile = "./$timestring/userfinalout.txt"; #partially successful combinations
+my $missingoutfile = "./$timestring/missingout.txt"; #partially successful combinations
 
 ##### my $fragprintall = 1;	# set to 1 if all fragments are to be printed, not just the best, NOT YET INSTITUTED
 
@@ -169,22 +174,24 @@ my @grpgrp = groupGroups (@subs);
 my @revgrpgrp = reverse @grpgrp;
 
 
+
+
 if (grep($_ =~ /allrebase/, @enzymesList)) {
 %enzymes = itsafile($enzymeFile);
 print "PROCESSING: ". (scalar keys %enzymes) . " enzymes were read from <a href=\"$enzymeFile\">$enzymeFile</a>\n<br>";
 }
 
 elsif (($_ !~ /allrebase/) && (defined @enzymesList))  {
-%enzymes = itsachosen(@enzymesList);
 
+%enzymes = itsachosen(@enzymesList);
 # print @enzymesList;
 foreach (@enzymesList) {my($just,$junk) = split('\t',$_); push(@justEnz,$just)}
-print "PROCESSING: ". scalar(@enzymesList) . " enzymes were chosen from the list (<a href=\"$customfile\">review them here</a>)\n<br>";
+print "PROCESSING: ". scalar(@enzymesList) . " enzymes were chosen from the list <a href=\"$customfile\">custom.txt</a>\n<br>";
 }
 
 if ($enzymeFileCustom) {
 %customenzymes = itsacustom($enzymeFileCustom);
-print "PROCESSING: ". (scalar keys %customenzymes) . " custom enzymes were used (<a href=\"$customfile\">review them here</a>)\n<br>";
+print "PROCESSING: ". (scalar keys %customenzymes) . " custom enzymes were used <a href=\"$customfile\">custom.txt</a>\n<br>";
 @enzymes{keys %customenzymes} = values %customenzymes;
 }
 
@@ -452,6 +459,8 @@ KEYLOOP: for my $i (0..$#keylist-3) {
 
 	if ($newcount == $numcombos) {
 	 $combonumber++;
+		if ($combonumber > 9999) {print "<br><br><em><b>Whoa there!</b></em><br>Too many results, go back and raise the enzyme stringency.  <br>Stopping soon...<br><br>" and last KEYLOOP}
+
 	 push @{$goodcombo{$combonumber}},($rev_groups{$keylist[$i]}[0],$rev_groups{$keylist[$j]}[0],$rev_groups{$keylist[$k]}[0],$rev_groups{$keylist[$l]}[0]);
 	 $finalsave{$combonumber} = (($keylist[$i])=~ tr/1//) + (($keylist[$j])=~ tr/1//) + (($keylist[$k])=~ tr/1//) + (($keylist[$l])=~ tr/1//);
 	}
@@ -526,8 +535,8 @@ else {print "<br>RESULTS: <em>There were NO SUCCESSFUL ENZYME GROUPS, please try
 # print "PRINTED: The top $matchlimit combinations, <a href=\"./$timestring/finalout.txt\">finalout.txt</a>\n<br>" if ($combonumber > 0);
 
 
-if ($useroutfile) {
-	open (USEROUT, ">$useroutfile") or die "Couldn't open $useroutfile: $!";
+if ($missingoutfile) {
+	open (USEROUT, ">$missingoutfile") or die "Couldn't open $missingoutfile: $!";
 	print USEROUT "ENZYME PICKER KEY\nGroup Members\n\n";
 	my %tetragroups;
 	my $matchnumber=0;
@@ -572,7 +581,7 @@ if ($usercombonumber < 100) {$usermatchlimit = $usercombonumber};
 if ($mismatches) {
  if ($usercombonumber > 0) {
 	print "<br>RESULTS: There were $usercombonumber sets of enzymes found that distinguished at least " . ($numgroups-$mismatches) . " groups.\n";
-	print "<br>PRINTED: The top $usermatchlimit partially successful combinations, <a href=\"./$timestring/userfinalout.txt\">userfinalout.txt</a>\n";
+	print "<br>PRINTED: The top $usermatchlimit partially successful combinations, <a href=\"./$timestring/missingout.txt\">missingout.txt</a>\n";
 	}
 	else {print "<br>RESULTS: <em>There were NO PARTIALLY SUCCESSFUL ENZYME GROUPS."}
 }
