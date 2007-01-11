@@ -18,7 +18,7 @@ program could be useful to pick some enzymes that uniquely discriminate the diff
 <big><strong><a href="http://code.google.com/p/repk/wiki/Manual">Read the Manual</a></big></strong>
 <br><br>
  <div id="formDiv">
-<form action="./repk0.2.7.cgi" method="post" name="dataform" method="post">
+<form action="./repk0.2.8.cgi" method="post" name="dataform" method="post">
 <p>Enter your FASTA aligned sequences here:
 <br>(Here is an example input file: <a href="./alignment.4.fas">alignment.4.fas</a>)<br>
 <TEXTAREA NAME="fasta" COLS=90 ROWS=10></TEXTAREA>
@@ -27,7 +27,7 @@ program could be useful to pick some enzymes that uniquely discriminate the diff
 <br>(Hold down the [Control] key to deselect, or to select multiple enzymes)<br>
 <select name="enzyme_list" multiple>
 <option value='allrebase' SELECTED>All Commercially Available Enzymes in REBASE</option>
-<option value='norebase'>Use Custom enzymes only</option>
+<option value='norebase'>Use my Custom enzymes only</option>
 
 <?php
 $enzFile = "./enzymes_type2.txt";
