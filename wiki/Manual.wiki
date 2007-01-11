@@ -134,7 +134,9 @@ Same as finalout.txt but with the partially successful enzyme groups.
 
 ===Too many enzymes===
   * Increase the stringency
+  * Increase the cutoff: the fragments will have to be better separated by the enzymes
   * Decrease the number of missing groups allowed.
+
 
 ===Under the hood===
 Computationally, the program first performs an in silico digestion of the inputted sequences (both forward and reverse complemented), with each restriction enzyme selected by the user, to find the terminal restriction fragment length for each enzyme for each sequence.  Next the stringency filter is applied so that only the fraction of enzymes that passes the user-defined stringency cutoff continue.  Those enzymes are then scanned to find those that either do not differentiate any sequence groups or differentiate them all (within the user-defined maximum and minimum fragment lengths), and those are removed.  The remaining enzymes are binned by their identical ability to differentiate sequence groups (not necessarily with the same fragment lengths, however).  Finally, all enzyme bins are logically compared quad-wise with every other possible combination of 3 enzyme bins to find sets of 4 bins that together differentiate every sequence group.  A score is calculated based upon the total number of sequence groups differentiated by the bin group divided by the number of sequence groups (thus maximum score of 4) and the successful bin groups are reported to the user sorted by score.
@@ -151,7 +153,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
