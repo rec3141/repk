@@ -77,7 +77,7 @@ The shortest and longest fragment lengths acceptable.  You might change these de
 An individual enzyme must distinguish MORE than this percent of groups to be acceptable.  It is useful to increase this number (up to 100) if you get a lot of hits and the program takes a long time to execute or gives an error.  Change this first if you find too many enzymes.  Default is 0.
 
 ===7. Maximum Missing Group Combinations ===
-The maximum number of sequence group combinations allowed to be missed by each enzyme.  As an example, if there are three different sequence groups (A, B, C) then there are also three sequence group combinations (AB, AC, BC).  If it is not possible to distinguish any one of those sequence group combinations (e.g. A from C) then choosing "1" for this option will allow REPK to still find enzymes that distinguish A from B and B from C.  If this number is set too high then it will return many results and the program will fail. Default is 0.
+The maximum number of sequence group combinations allowed to be missed by each enzyme. As an example, if there are three different sequence groups (A, B, C) then there are also three sequence group combinations (AB, AC, BC). If it is not possible to distinguish any one of those sequence group combinations (e.g. A from C) then choosing "1" for this option will allow REPK to miss one group combination (AC) but still find enzymes that distinguish A from B and B from C.  If this number is set too high then it will return many results and the program will fail. Default is 0.
 
 ===8. Max Matches Returned===
 The maximum number of results to return, up to 10000.  Will only return the highest ranking results.  Default is 100.
@@ -153,7 +153,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
