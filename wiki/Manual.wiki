@@ -103,8 +103,11 @@ The list of enzymes used in the analysis if selected from REBASE list or manuall
 This file lists the enzymes that singlehandedly distinguish all of the groups.
 
 ===no_cuts.txt===
-This file lists the enzymes that don't cut/distinguish any of the groups.
+This file lists the enzymes that don't cut/distinguish any of the groups within the basepair cutoffs.
 
+===yes_cuts.txt===
+This file lists the enzymes that did cut and distinguish any of the groups within the basepair cutoffs.  This contents of this file can be used in the custom enzyme box.
+ 
 ===fragfile.txt===
 This file shows the fragment lengths for each sequence and enzyme combination.
 
@@ -153,7 +156,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
