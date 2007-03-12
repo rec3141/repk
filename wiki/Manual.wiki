@@ -18,7 +18,7 @@ All sequences should begin at the 5' end of your LABELED primer and end at the 3
   * Sequence groups are coded as characters of the taxa name and separated by a delimiter, and each sequence can have multiple delimiters.
   * You may find the [http://rdp.cme.msu.edu/classifier/classifier.jsp RDP classifier] useful in generating these subsets.
 
-An example file might look like this:
+An [http://repk.googlecode.com/files/alignment.4.fas example file] might look like this:
 
 {{{
 >Pyrococcus_abyssi_GE5
@@ -153,6 +153,7 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
+
 
 
 
