@@ -64,7 +64,7 @@ Using the example file above with the example RDP-Classifier file , each delimit
   # Species
   # strain
 
-In this example, running the program with a 6 will search for enzymes that discriminate the different Families in the dataset. If you want to to find enzymes that discriminate the different Families in the dataset, rerun using 5 as the group subset.  Default is 1.
+In this example, running the program with a 6 will search for enzymes that discriminate the different Genera in the dataset. If you want to to find enzymes that discriminate the different Families in the dataset, rerun using 5 as the group subset.  Default is 1.
 
 
 ===4. Cutoff===
@@ -153,7 +153,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
-
 
 
 
