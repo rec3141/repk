@@ -13,7 +13,7 @@ REPK (*R* estriction *E* ndonuclease *P* ic *K* er) finds sets of 4 commercially
 
 ==INPUTS==
 ===1. Multiple sequence alignment in FASTA format.===
-All sequences should begin at the 5' end of your LABELED primer and end at the 3' end of your UNLABELED primer.  The sequences names should have no whitespace or weird characters (- a-z A-Z 0-9 . ; | {{{_}}} are OK, everything else will be removed). Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program.
+All sequences should begin at the 5' end of your LABELED primer and end at the 3' end of your UNLABELED primer.  If your sequence does not extend that far they can be padded with X's or N's.  The sequences names should have no weird characters (-, a-z, A-Z, 0-9, period , semicolon, pipe, underscore are OK, everything else will be removed). _*Spaces in the title will be converted to underscores*_.  Unknown/bad sequence data should be replaced by X's or N's, and these areas should make up a small part of the sequences because they might have restriction sites that will be missed by this program.
 
   * Sequence groups are coded as characters of the taxa name and separated by a delimiter, and each sequence can have multiple delimiters.
   * You may find the [http://rdp.cme.msu.edu/classifier/classifier.jsp RDP classifier] useful in generating these subsets.
@@ -153,6 +153,8 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232. 
+
+
 
 
 
