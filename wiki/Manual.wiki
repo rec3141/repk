@@ -70,13 +70,13 @@ In this example, running the program with a 6 will search for enzymes that discr
 This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination by your capillary electrophoresis machine or gel sequencer.  Default is 5.
 
 ===5. Min/Max Fragment Lengths===
-The shortest and longest fragment lengths acceptable.  You might change these depending on, e.g. the length of your PCR product, the minimum or maximum fragment length your capillary electrophoresis machine can read accurately, the range of fragment lengths that survive your cleanup procedure, or the presence of primers and primer dimers. Any fragments shorter or longer than this won't be included in the analysis, but will be present in the 'fragfile' output.  Defaults are 75 and 900.
+The shortest and longest fragment lengths acceptable.  You might change these depending on, e.g. the length of your PCR product, the minimum or maximum fragment length your capillary electrophoresis machine can read accurately, the range of fragment lengths that survive your cleanup procedure, or the presence of primers and primer dimers. Any fragments shorter or longer than this will be lumped together and will not contribute in differentiating sequence groups, but will be present in the 'fragfile' output.  Defaults are 75 (min) and 900 (max).
 
 ===6. Stringency===
-An individual enzyme must distinguish MORE than this percent of groups to be acceptable.  It is useful to increase this number (up to 100) if you get a lot of hits and the program takes a long time to execute or gives an error.  Change this first if you find too many enzymes.  Default is 0.
+An individual enzyme must distinguish MORE than this percent of sequence groups to be acceptable.  Default is 'automatic', which begins at a stringency of 0 and repeats if it finds too many enzyme sets, incrementing the stringency by 10% until it finds an acceptable number of enzymes sets.  Setting a stringency besides 'automatic' will use the set stringency and not repeat if too many enzyme sets are found.
 
-===7. Maximum Missing Group Combinations ===
-The maximum number of sequence group combinations allowed to be missed by each enzyme. As an example, if there are three different sequence groups (e.g. Pyrococcus, Pyrodictium,Staphylothermus) then there are also three sequence group combinations (Pyrococcus-Pyrodictium, Pyrococcus-Staphylothermus, Pyrodictium-Staphylothermus). If it is not possible to distinguish any one of those sequence group combinations (e.g. Pyrococcus from Pyrodictium) then choosing "1" for this option will allow REPK to miss one group combination (Pyrococcus-Pyrodictium) but still find enzymes that distinguish Pyrococcus from Staphylothermus and Pyrodictium from Staphylothermus.  If this number is set too high then it will return many results and the program will fail. Default is 0.
+===7. Maximum Missing Sequence Group Combinations ===
+The maximum number of sequence group combinations allowed to be missed by each enzyme. As an example, if there are three different sequence groups (e.g. Pyrococcus, Pyrodictium, Staphylothermus) then there are also three sequence group combinations (Pyrococcus-Pyrodictium, Pyrococcus-Staphylothermus, Pyrodictium-Staphylothermus). If it is not possible to distinguish any one of those sequence group combinations (e.g. Pyrococcus from Pyrodictium) then choosing "1" for this option will allow REPK to miss one group combination (Pyrococcus-Pyrodictium) but still find enzymes that distinguish Pyrococcus from Staphylothermus and Pyrodictium from Staphylothermus.  If this number is set too high then it will return many results and the program will fail. Default is 0.
 
 ===8. Max Matches Returned===
 The maximum number of results to return, up to 10000.  Will only return the highest ranking results.  Default is 100.
@@ -123,9 +123,20 @@ This is the final output which shows all of the successful enzyme groups.
 Same as finalout.txt but with the partially successful enzyme groups.
 
 ==GLOSSARY==
-===Sequence group===
+===Group subset===
+The number of the taxonomic group (e.g. Genus, species, ecotype, etc.) to be analyzed by REPK, as delimited by underscores in the sequence file.  Given an example sequence named TaxA_TaxB_TaxC_TaxD, to analyze by TaxC you would choose a Group Subset of 3.
+
+===Sequence Group===
+All of the taxanomic names in the chosen Group Subset. Given an example file with three sequences, named TaxA_TaxB_TaxC_TaxD, VaxA_VaxB_VaxC_VaxD, and WaxA_WaxB_WaxC_WaxD, and using a Group Subset of 3, then there are three Sequence Groups: TaxC, VaxC, and WaxC.
+ 
+===Sequence Group Combination===
+Every possible combination of Sequence Groups.  Given an example file with three sequences, named TaxA_TaxB_TaxC_TaxD, VaxA_VaxB_VaxC_VaxD, and WaxA_WaxB_WaxC_WaxD, and using a Group Subset of 3, then there are 3 possible Sequence Group Combinations: TaxC-VaxC, TaxC-WaxC, and VaxC-WaxC.
+
 ===Enzyme groups===
+Enzymes that differentiate the same Sequence Group Combinations.
+
 ===Enzyme set===
+Four enzymes that together can differentiate all of the Sequence Group Combinations (less any allowed mismatches).
 
 ==HINTS AND TIPS==
 ===Too few enzymes===
@@ -156,5 +167,4 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232.
-
 
