@@ -48,22 +48,22 @@ The character used to separate groups in your FASTA sequence names, current only
 Selects group subset to differentiate.
 
 Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
-  # Genus
-  # Species
-  # strain
+  # Genus (e.g. Pyrococcus)
+  # Species (e.g. abyssi)
+  # strain (e.g. GE5)
 
-Using the example file above with the example RDP-Classifier file , each delimiter will differentiate the sequences by:
-  # Domain
-  # Phylum
-  # Class
-  # Order
-  # Family
-  # Genus
-  # Genus (again)
-  # Species
-  # strain
+Using the example file above with the example RDP-Classifier file, each delimiter will differentiate the sequences by the following divisions (and whether they are from RDP or are present in the example file):
+  # Domain (RDP)
+  # Phylum (RDP)
+  # Class (RDP)
+  # Order (RDP)
+  # Family (RDP)
+  # Genus (RDP)
+  # Genus (example)
+  # Species (example)
+  # strain (example)
 
-In this example, running the program with a 6 will search for enzymes that discriminate the different Genera in the dataset. If you want to to find enzymes that discriminate the different Families in the dataset, rerun using 5 as the group subset.  Default is 1.
+In this example, running the program with a 6 will search for enzymes that discriminate the different Genera in the dataset (as determined by RDP). If you want to to find enzymes that discriminate the different Families in the dataset (as determined by RDP), rerun using 5 as the group subset.  Default is 1.
 
 
 ===4. Cutoff===
@@ -122,6 +122,10 @@ This is the final output which shows all of the successful enzyme groups.
 ===missingout.txt===
 Same as finalout.txt but with the partially successful enzyme groups.
 
+==GLOSSARY==
+===Sequence group===
+===Enzyme groups===
+===Enzyme set===
 
 ==HINTS AND TIPS==
 ===Too few enzymes===
@@ -152,7 +156,6 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232.
-
 
 
 
