@@ -40,6 +40,9 @@ All commercially available Type IIP restriction endonucleases (i.e. not includin
 
   * _TIP_ The easiest way to use a subset of the REBASE list is to open the plaintext file and remove the lines you do not want to include, then paste the rest into the Custom enzyme box.
 
+  * _A Note About Restriction Enzyme Subtypes_ There are a diverse array of restriction enzymes and although most fall into a class described as Type IIP enzymes, it is not presently possible to separate out all of those that are not, some of which cut at unusual sites or require methylation, for example, so they are included in the commercially available enzyme list even though *they may not be optimal for T-RFLP*.  A classification of restriction enzyme subtypes is available at [http://http://rebase.neb.com/cgi-bin/sublist REBASE Enzyme Sub Types].  *Make sure to check that the enzymes you find with REPK are otherwise suitable for T-RFLP* 
+
+
 ===2. Group Subset Delimiter===
 
 The character used to separate groups in your FASTA sequence names, current only underscore (*{{{_}}}*) is allowed.  The example file above uses underscore group subset delimiters.
@@ -167,3 +170,4 @@ Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length
 Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
 
 Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232.
+
