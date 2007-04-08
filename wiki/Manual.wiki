@@ -45,12 +45,12 @@ All commercially available Type IIP restriction endonucleases (i.e. not includin
   * _A Note About Restriction Enzyme Subtypes_ There are a diverse array of restriction enzymes and although most fall into a class described as Type IIP enzymes, it is not presently possible to separate out all of those that are not, some of which cut at unusual sites or require methylation, for example, so they are included in the commercially available enzyme list even though *they may not be optimal for T-RFLP*.  A classification of restriction enzyme subtypes is available at [http://http://rebase.neb.com/cgi-bin/sublist REBASE Enzyme Sub Types].  *Make sure to check that the enzymes you find with REPK are otherwise suitable for T-RFLP* 
 
 
-===2. Taxonomic rank Delimiter===
+===2. Taxonomic Rank Delimiter===
 
-The character used to separate groups in your FASTA sequence names, current only underscore (*{{{_}}}*) is allowed.  The example file above uses underscore taxonomic rank delimiters.
+The character used to separate groups in your FASTA sequence names, current only underscore (*{{{_}}}*) is allowed.  The example file above uses underscores as taxonomic rank delimiters.
 
 ===3. Taxonomic rank===
-Selects the level of taxonomic rank differentiate.
+This option selects the level of Taxonomic Rank to differentiate.
 
 Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
   # Genus (e.g. Pyrococcus)
@@ -128,20 +128,20 @@ This is the final output which shows all of the successful enzyme groups.
 Same as finalout.txt but with the partially successful enzyme groups.
 
 ==GLOSSARY==
-===Group subset===
+===Taxonomic rank===
 The number of the taxonomic group (e.g. Genus, species, ecotype, etc.) to be analyzed by REPK, as delimited by underscores in the sequence file.  Given an example sequence named TaxA_TaxB_TaxC_TaxD, to analyze by TaxC you would choose a Group Subset of 3.
 
 ===Sequence Group===
-All of the taxanomic names in the chosen Group Subset. Given an example file with three sequences, named TaxA_TaxB_TaxC_TaxD, VaxA_VaxB_VaxC_VaxD, and WaxA_WaxB_WaxC_WaxD, and using a Group Subset of 3, then there are three Sequence Groups: TaxC, VaxC, and WaxC.
+All of the distinct groups in the chosen taxonomic rank. Given an example file with three sequences, named TaxA_TaxB_TaxC_TaxD, VaxA_VaxB_VaxC_VaxD, and WaxA_WaxB_WaxC_WaxD, and using a Group Subset of 3, then there are three Sequence Groups: TaxC, VaxC, and WaxC.
  
 ===Sequence Group Combination===
 Every possible combination of Sequence Groups.  Given an example file with three sequences, named TaxA_TaxB_TaxC_TaxD, VaxA_VaxB_VaxC_VaxD, and WaxA_WaxB_WaxC_WaxD, and using a Group Subset of 3, then there are 3 possible Sequence Group Combinations: TaxC-VaxC, TaxC-WaxC, and VaxC-WaxC.
 
-===Enzyme groups===
-Enzymes that differentiate the same Sequence Group Combinations.
+===Enzyme bins===
+Enzymes that differentiate the same Sequence Group Combinations, regardless of whether they produce the same fragment lengths, are pooled in the same enzyme bin.
 
 ===Enzyme set===
-Four enzymes that together can differentiate all of the Sequence Group Combinations (less any allowed mismatches).
+Four enzymes that together can differentiate all of the Sequence Group Combinations (less any allowed missing groups).
 
 ==HINTS AND TIPS==
 ===Too few enzymes===
