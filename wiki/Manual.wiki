@@ -45,12 +45,12 @@ All commercially available Type IIP restriction endonucleases (i.e. not includin
   * _A Note About Restriction Enzyme Subtypes_ There are a diverse array of restriction enzymes and although most fall into a class described as Type IIP enzymes, it is not presently possible to separate out all of those that are not, some of which cut at unusual sites or require methylation, for example, so they are included in the commercially available enzyme list even though *they may not be optimal for T-RFLP*.  A classification of restriction enzyme subtypes is available at [http://http://rebase.neb.com/cgi-bin/sublist REBASE Enzyme Sub Types].  *Make sure to check that the enzymes you find with REPK are otherwise suitable for T-RFLP* 
 
 
-===2. Group Subset Delimiter===
+===2. Taxonomic rank Delimiter===
 
-The character used to separate groups in your FASTA sequence names, current only underscore (*{{{_}}}*) is allowed.  The example file above uses underscore group subset delimiters.
+The character used to separate groups in your FASTA sequence names, current only underscore (*{{{_}}}*) is allowed.  The example file above uses underscore taxonomic rank delimiters.
 
-===3. Group Subset===
-Selects group subset to differentiate.
+===3. Taxonomic rank===
+Selects the level of taxonomic rank differentiate.
 
 Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
   # Genus (e.g. Pyrococcus)
