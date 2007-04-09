@@ -128,6 +128,12 @@ This is the final output which shows all of the successful enzyme groups.
 Same as finalout.txt but with the enzyme groups that were partially successful, that is, those able to discriminate all but the specified number of missing sequence groups combinations.
 
 ==GLOSSARY==
+===Isoschizomer===
+Isoschizomers are REases that recognize the same sequence. 
+
+===Neoschizomer===
+Neoschizomers are that subset of isoschizomers that recognize the same sequence, but cleave at different positions.
+
 ===Taxonomic rank===
 The number of the taxonomic group (e.g. Genus, species, ecotype, etc.) to be analyzed by REPK, as delimited by underscores in the sequence file.  Given an example sequence named TaxA_TaxB_TaxC_TaxD, to analyze by TaxC you would choose a Taxonomic Rank of 3.
 
