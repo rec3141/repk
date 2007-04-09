@@ -42,7 +42,7 @@ All commercially available Type IIP restriction endonucleases (i.e. not includin
 
   * _TIP_ The easiest way to use a subset of the REBASE list is to open the plaintext file and remove the lines you do not want to include, then paste the rest into the Custom enzyme box.
 
-  * _A Note About Restriction Enzyme Subtypes_ There are a diverse array of restriction enzymes and although most fall into a class described as Type IIP enzymes, it is not presently possible to separate out all of those that are not, some of which cut at unusual sites or require methylation, for example, so they are included in the commercially available enzyme list even though *they may not be optimal for T-RFLP*.  A classification of restriction enzyme subtypes is available at [http://http://rebase.neb.com/cgi-bin/sublist REBASE Enzyme Sub Types].  *Make sure to check that the enzymes you find with REPK are otherwise suitable for T-RFLP* 
+  * _A Note About Restriction Enzyme Subtypes_ There are a diverse array of restriction enzymes and although most fall into a class described as Type IIP enzymes, it is not presently possible to separate out all of those that are not, some of which cut at unusual sites or require methylation, for example, so they are included in the commercially available enzyme list even though *they may not be optimal for T-RFLP*.  A classification of restriction enzyme subtypes is available at [http://rebase.neb.com/cgi-bin/sublist REBASE Enzyme Sub Types].  *Make sure to check that the enzymes you find with REPK are otherwise suitable for T-RFLP* 
 
 
 ===2. Taxonomic Rank Delimiter===
