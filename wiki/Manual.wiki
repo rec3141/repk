@@ -8,7 +8,7 @@ by Eric Collins (rec3141.at.gmail.com) and Gabrielle Rocap
 
 ==OVERVIEW==
 
-REPK (*R* estriction *E* ndonuclease *P* ic *K* er) finds sets of 4 commercially available restriction endonucleases which together uniquely differentiate user-designated sequence groups from a user-supplied FASTA format sequence file of _any gene_, not just 16S rRNA.  The user-defined sequences groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engebretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
+REPK (*R* estriction *E* ndonuclease *P* ic *K* er) finds sets of 4 commercially available restriction endonucleases which together are able differentiate user-designated sequence groups from a user-supplied FASTA format sequence file of _any gene_, not just 16S rRNA.  The user-defined sequence groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engebretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
 
 ==INPUTS==
 ===1. Multiple sequence alignment in FASTA format.===
@@ -31,7 +31,7 @@ xTTCCGGTTGATCCTGCCGGACCCGACCGCTATCGGGGTGGGGCTAAGCC
 }}}
 
 ===2. Optional: RDP-Classifier output===
-This optional input allows you to use the output from [http://rdp.cme.msu.edu/classifier/ RDP-Classifier] to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here".
+This optional input allows you to use the output from [http://rdp.cme.msu.edu/classifier/ RDP-Classifier] to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here".  REPK will prepend the RDP-Classifier information to the beginning of each FASTA line. The modified file, renamed.fasta, is available as part of the output.
 
 
 
@@ -113,7 +113,7 @@ This file lists the enzymes that did cut and distinguish any of the groups withi
 This file shows the fragment lengths for each sequence and enzyme combination.
 
 ===enzmatrix.txt===
-This is the file used by the program to calculate the best enzymes. Each column contains a pair of groups, and each row contains the enzyme name. A zero indicates that the enzyme does not distinguish those groups from each other. A one indicates that the enzyme does distinguish those groups from each other. The stringency setting specifies the fraction of ones that an enzyme must have to be acceptable.  This file can be useful in the case that there are no sets which uniquely differentiate your sequences.
+This is the file used by the program to calculate the best enzymes. Each row contains a pair of groups, and each column contains the enzyme name. A zero indicates that the enzyme does not distinguish those groups from each other. A one indicates that the enzyme does distinguish those groups from each other. The stringency setting specifies the fraction of ones that an enzyme must have to be acceptable.  This file can be useful in the case that there are no sets which uniquely differentiate your sequences.
 
 ===finalout.txt===
 This is the final output which shows all of the successful enzyme groups.
@@ -125,11 +125,11 @@ This is the final output which shows all of the successful enzyme groups.
     * Choose your enzyme based upon price, fragment lengths, whatever.
 
 ===missingout.txt===
-Same as finalout.txt but with the enzyme groups that were partially successful, that is, those able to discriminate all but the specified number of missing sequence groups combinations.
+This file is part of the output if "max missing group combinations" is set to greater than zero.  It is the same as finalout.txt but with the enzyme groups that were partially successful, that is, those able to discriminate all but the specified number of missing sequence groups combinations.
 
 ==GLOSSARY==
 ===Isoschizomer===
-Isoschizomers are REases that recognize the same sequence. 
+Isoschizomers are restriction endonucleases  that recognize the same sequence. 
 
 ===Neoschizomer===
 Neoschizomers are that subset of isoschizomers that recognize the same sequence, but cleave at different positions.
