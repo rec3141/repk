@@ -121,15 +121,15 @@ This is the final output which shows all of the successful enzyme groups.
     * Each numbered group of enzymes distinguishes the same groups of sequences (NOTE that they do not give the same fragment lengths, they only distinguish the same groups)
   * "Enzyme sets" shows the enzyme sets that uniquely differentiate your sequences
     * Score: the sum of the fractions of sequence groups discriminated by all of the enzymes (a perfect score equals 4).
-  * Enzyme sets: each enzyme listed is only the first member of the set from "Enzyme Picker Key", so choosing any other member of the same group will yield the same discriminatory abilities.
+  * Enzyme sets: each enzyme listed is only the first member of the bin from "Enzyme Picker Key", so choosing any other member of the same bin will yield the same discriminatory abilities.
     * Choose your enzyme based upon price, fragment lengths, whatever.
 
 ===missingout.txt===
-Same as finalout.txt but with the partially successful enzyme groups.
+Same as finalout.txt but with the enzyme groups that were partially successful, that is, those able to discriminate all but the specified number of missing sequence groups combinations.
 
 ==GLOSSARY==
 ===Taxonomic rank===
-The number of the taxonomic group (e.g. Genus, species, ecotype, etc.) to be analyzed by REPK, as delimited by underscores in the sequence file.  Given an example sequence named TaxA_TaxB_TaxC_TaxD, to analyze by TaxC you would choose a Group Subset of 3.
+The number of the taxonomic group (e.g. Genus, species, ecotype, etc.) to be analyzed by REPK, as delimited by underscores in the sequence file.  Given an example sequence named TaxA_TaxB_TaxC_TaxD, to analyze by TaxC you would choose a Taxonomic Rank of 3.
 
 ===Sequence Group===
 All of the distinct groups in the chosen taxonomic rank. Given an example file with three sequences, named TaxA_TaxB_TaxC_TaxD, VaxA_VaxB_VaxC_VaxD, and WaxA_WaxB_WaxC_WaxD, and using a Group Subset of 3, then there are three Sequence Groups: TaxC, VaxC, and WaxC.
@@ -141,12 +141,12 @@ Every possible combination of Sequence Groups.  Given an example file with three
 Enzymes that differentiate the same Sequence Group Combinations, regardless of whether they produce the same fragment lengths, are pooled in the same enzyme bin.
 
 ===Enzyme set===
-Four enzymes that together can differentiate all of the Sequence Group Combinations (less any allowed missing groups).
+Four enzyme bins that together can differentiate all of the Sequence Group Combinations (less any allowed missing groups).
 
 ==HINTS AND TIPS==
 ===Too few enzymes===
   * Decrease the stringency if possible.
-  * Re-examine the groups you are trying to differentiate, check to see if there are any groups that are not differentiable at all (check out enzmatrix.txt)
+  * Re-examine the groups you are trying to differentiate, check to see if there are any groups that are not differentiable at all (check out enzmatrix.txt). If so, you will need to allow for missing groups.
   * Re-examine the cutoff: lowering it will probably give more fragments that could be used to differentiate groups, but could also separate groups that are really the same.
   * Re-examine the min/max fragment lengths: allowing more lengths might allow more different fragments.
   * Increase the number of missing groups allowed.
