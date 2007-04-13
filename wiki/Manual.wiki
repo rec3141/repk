@@ -33,9 +33,6 @@ xTTCCGGTTGATCCTGCCGGACCCGACCGCTATCGGGGTGGGGCTAAGCC
 ===2. Optional: RDP-Classifier output===
 This optional input allows you to use the output from [http://rdp.cme.msu.edu/classifier/ RDP-Classifier] to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here".  REPK will prepend the RDP-Classifier information to the beginning of each FASTA line. The modified file, renamed.fasta, is available as part of the output.
 
-
-
-
 ==OPTIONS==
 ===1. Restriction endonucleases and cut sites===
 All commercially available Type IIP restriction endonucleases (i.e. not including [http://repk.googlecode.com/files/enzymes_weird_612.txt Type IIA,B], etc.) from [http://rebase.neb.com/rebase/rebase.html REBASE] are available ([http://repk.googlecode.com/files/enzymes_type2_612.txt see them here], ISO stands for isoschizomer and all enzymes following the first have the same recognition and cutting sites).  You can use all of them, some of them, or none of them.  A custom enzyme (or list of enzymes) can be entered as well, e.g. a fake "no cut" enzyme.  The enzyme list on the REPK website is automatically updated with the latest REBASE database on the first day of each month.
@@ -51,6 +48,9 @@ The character used to separate groups in your FASTA sequence names, current only
 
 ===3. Taxonomic rank===
 This option selects the level of Taxonomic Rank to differentiate.
+
+==CHECK TAXONOMIC RANKS INSTEAD OF RUNNING REPK==
+If you have entered a FASTA sequence file, checking this box and clicking "submit" will not run the REPK analysis but will instead provide a list of the Taxonomic Ranks that REPK will see when it is run.  This enables you to choose the proper rank below.
 
 Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
   # Genus (e.g. Pyrococcus)
