@@ -49,7 +49,7 @@ The character used to separate groups in your FASTA sequence names, current only
 ===3. Taxonomic rank===
 This option selects the level of Taxonomic Rank to differentiate.
 
-==CHECK TAXONOMIC RANKS INSTEAD OF RUNNING REPK==
+===CHECK TAXONOMIC RANKS INSTEAD OF RUNNING REPK===
 If you have entered a FASTA sequence file, checking this box and clicking "submit" will not run the REPK analysis but will instead provide a list of the Taxonomic Ranks that REPK will see when it is run.  This enables you to choose the proper rank below.
 
 Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
