@@ -169,7 +169,7 @@ Computationally, the program first performs an in silico digestion of the inputt
 ==CITING REPK==
 If you find REPK useful in your research please cite:
 
-Collins, R. E. and G. Rocap. 2007.  REPK: an analytical web server to select restriction endonucleases for terminal restriction fragment length polymorphism analysis. Nucleic Acids Res. 35 (Database issue): W58-W62; doi:10.1093/nar/gkm384 [Abstract]
+Collins, R. E. and G. Rocap. 2007.  REPK: an analytical web server to select restriction endonucleases for terminal restriction fragment length polymorphism analysis. Nucleic Acids Res. 35 (Database issue): W58-W62; doi:10.1093/nar/gkm384    [http://nar.oxfordjournals.org/cgi/content/full/35/suppl_2/W58?ijkey=8OPX1p1IyGKNWuj&keytype=ref Free full text]
 
 
 ==REFERENCES==
