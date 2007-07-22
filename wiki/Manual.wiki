@@ -166,6 +166,12 @@ Four enzyme bins that together can differentiate all of the Sequence Group Combi
 ===Under the hood===
 Computationally, the program first performs an in silico digestion of the inputted sequences (both forward and reverse complemented), with each restriction enzyme selected by the user, to find the terminal restriction fragment length for each enzyme for each sequence.  Next the stringency filter is applied so that only the fraction of enzymes that passes the user-defined stringency cutoff continue.  Those enzymes are then scanned to find those that either do not differentiate any sequence groups or differentiate them all (within the user-defined maximum and minimum fragment lengths), and those are removed.  The remaining enzymes are binned by their identical ability to differentiate sequence groups (not necessarily with the same fragment lengths, however).  Finally, all enzyme bins are logically compared quad-wise with every other possible combination of 3 enzyme bins to find sets of 4 bins that together differentiate every sequence group.  A score is calculated based upon the total number of sequence groups differentiated by the bin group divided by the number of sequence groups (thus maximum score of 4) and the successful bin groups are reported to the user sorted by score.
 
+==CITING REPK==
+If you find REPK useful in your research please cite:
+
+Collins, R. E. and G. Rocap. 2007.  REPK: an analytical web server to select restriction endonucleases for terminal restriction fragment length polymorphism analysis. Nucleic Acids Res. 35 (Database issue): W58-W62; doi:10.1093/nar/gkm384 [Abstract]
+
+
 ==REFERENCES==
 Cole JR, Chai B, Farris RJ, Wang Q, Kulam SA, McGarrell DM, Garrity GM, Tiedje JM. The Ribosomal Database Project (RDP-II): sequences and tools for high-throughput rRNA analysis. Nucleic Acids Research 2005 Jan 1;33(Database Issue):D294-D296. doi: 10.1093/nar/gki038.
 
