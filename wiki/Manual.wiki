@@ -14,6 +14,8 @@ REPK (*R* estriction *E* ndonuclease *P* ic *K* er) finds sets of 4 commercially
 ===1. Multiple sequence alignment in FASTA format.===
 Sequences need to begin at the 5’ of the forward primer and end at the 5’ of the reverse primer used for T-RFLP (so that accurate fragment lengths can be calculated). If the sequences do not extend far enough the program will accept X’s or N’s to pad the space, and it is up to the user to decide whether the risk of a TRF within those indeterminate nucleotides is prohibitive, and to choose a better sequence or better primers if so. The letter ’X’ is a nonstandard abbreviation for unknown nucleotide bases which can be used in this case to differentiate padded bases added from any unknown bases in the original Genbank sequence.
 
+*This site is useful for sequence format conversions and will also remove gaps: [http://www.ebi.ac.uk/cgi-bin/readseq.cgi Readseq at EMBL]
+
 Sequence names must contain only: dash, a-z, A-Z, 0-9, period , semicolon, or underscore, any other characters will be deleted. *Spaces in the title will be converted to underscores*.  
 
 *_Sequence names must be unique!_*
