@@ -2,6 +2,7 @@
 <body>
 <?php
  $repk_location="/Library/Webserver/Documents/cgi/repk/";
+ $repk_filename="repk.cgi";
  $cgi_location="/cgi/repk/";
 ?>
 
@@ -18,7 +19,7 @@ program could be useful to pick some enzymes that uniquely discriminate the diff
 <strong><font color="red">REPK may take HOURS when a lot of groups are used. See note below.</font></strong>
 <br><br>
  <div id="formDiv">
-<form action="/cgi/repk/repk.cgi" method="post" name="dataform" 
+<form action="<?php print $cgi_location.$repk_filename;?>" method="post" name="dataform" 
 method="post">
 
 <p>Enter your FASTA aligned sequences here:
