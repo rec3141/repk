@@ -16,8 +16,10 @@ use strict;
 #my $rebase = get($url);
 #print "blah $rebase";
 
+my $repk_location="/Library/Webserver/Documents/cgi/repk/";
+my $wget_location="/sw/bin/wget";
 `rm link_itype2`;
-`/sw/bin/wget --user-agent="Mozilla" http://rebase.neb.com/rebase/link_itype2`;
+`$wget_location --user-agent="Mozilla" http://rebase.neb.com/rebase/link_itype2`;
 
 my %Enzymes;
 my $version;
@@ -94,7 +96,7 @@ else {$WeirdEnzymes{$enzkey7}{'altsite'} = reverse(substr($new1,0,$3) . "^" . su
 }
 
 
-open(OUT, "> /Library/Webserver/Documents/cgi/repk/enzymes_type2p.txt");
+open(OUT, "> $repk_location"."enzymes_type2p.txt");
 foreach my $enzkey3 (sort {$a cmp $b} keys %NewEnzymes) {
 print OUT "$enzkey3\t$NewEnzymes{$enzkey3}{'recsite'}\tISO\t$NewEnzymes{$enzkey3}{'isos'}\n";
 }
@@ -106,7 +108,7 @@ print OUT "$enzkey3\t$NewEnzymes{$enzkey3}{'recsite'}\tISO\t$NewEnzymes{$enzkey3
 print OUT "NOCUT\tZZZ^ZZZ\tISO\tFakeEnzyme";
 close OUT or die "complete failure";
 
-open(OUT, "> /Library/Webserver/Documents/cgi/repk/enzymes_type2a.txt");
+open(OUT, "> $repk_location"."enzymes_type2a.txt");
 foreach my $enzkey4 (sort {$a cmp $b} keys %WeirdEnzymes) {
 print OUT "$enzkey4\t$WeirdEnzymes{$enzkey4}{'recsite'}\tISO\t$WeirdEnzymes{$enzkey4}{'isos'}\n";
 print OUT "$enzkey4+\t$WeirdEnzymes{$enzkey4}{'altsite'}\tISO\t$WeirdEnzymes{$enzkey4}{'isos'}\n";
@@ -114,7 +116,7 @@ print OUT "$enzkey4+\t$WeirdEnzymes{$enzkey4}{'altsite'}\tISO\t$WeirdEnzymes{$en
 }
 close OUT or die "complete failure";
 
-open(OUT, "> /Library/Webserver/Documents/cgi/repk/rebase_version.txt");
+open(OUT, "> $repk_location"."rebase_version.txt");
 print OUT "$version";
 close OUT or die "complete failure";
 

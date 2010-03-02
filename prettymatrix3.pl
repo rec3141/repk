@@ -1,13 +1,7 @@
 #!/opt/local/bin/perl
 ###
-### Switched orientation of enzmatrix in v.0.3.0 so need to recorrect it here
-###
 
  use strict;
-# use lib '/usr/lib/perl5/site_perl/5.8.0';
-# use lib '/da41/d61/rec3141/public_html/lib/';
-# use lib '~/public_html/lib';
-# use lib '/opt/local/lib/perl5/vendor_perl/5.8.8/darwin-2level/';
 
  use GD::Simple;
 
