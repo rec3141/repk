@@ -1,0 +1,187 @@
+# REPK Manual #
+
+by Eric Collins (rec3141.at.gmail.com) and Gabrielle Rocap
+
+
+## OVERVIEW ##
+
+REPK (**R** estriction **E** ndonuclease **P** ic **K** er) finds sets of 4 commercially available restriction endonucleases which together are able differentiate user-designated sequence groups from a user-supplied FASTA format sequence file of _any gene_, not just 16S rRNA.  The user-defined sequence groups allow the user to determine particular groups (e.g. taxonomic) of sequences to be differentiated by the program.  REPK is thus particularly useful in the case where a microbial community has been characterized by clone library analysis, as the actual sequences can be input into the program.  In this regard, shoving the entire RDP database through this program will a) certainly not work and b) be a waste of time -- to look at a very large community just use some common tetrameric restriction enzymes (e.g. see Engebretson and Moyer, 2003).  However, if you have a database of known sequences from an environment, this program could be useful to pick some enzymes that uniquely discriminate the different groups in your database.
+
+## INPUTS ##
+### 1. Multiple sequence alignment in FASTA format. ###
+Sequences need to begin at the 5’ of the forward primer and end at the 5’ of the reverse primer used for T-RFLP (so that accurate fragment lengths can be calculated). If the sequences do not extend far enough the program will accept X’s or N’s to pad the space, and it is up to the user to decide whether the risk of a TRF within those indeterminate nucleotides is prohibitive, and to choose a better sequence or better primers if so. The letter ’X’ is a nonstandard abbreviation for unknown nucleotide bases which can be used in this case to differentiate padded bases added from any unknown bases in the original Genbank sequence.
+
+**This site is useful for sequence format conversions and will also remove gaps: [Readseq at EMBL](http://www.ebi.ac.uk/cgi-bin/readseq.cgi)**
+
+Sequence names must contain only: dash, a-z, A-Z, 0-9, period , semicolon, or underscore, any other characters will be deleted. **Spaces in the title will be converted to underscores**.
+
+**_Sequence names must be unique!_**
+
+  * Sequence groups are coded as characters of the taxa name and separated by a delimiter, and each sequence can have multiple delimiters.
+  * You may find the [RDP classifier](http://rdp.cme.msu.edu/classifier/classifier.jsp) useful in generating these subsets.
+
+An [example file](http://repk.googlecode.com/files/alignment.4.fas) might look like this:
+
+```
+>Pyrococcus_abyssi_GE5
+ATTCCGGTTGATCCTGCCGGAGGCCACTGCTATGGGGGTCCGACTAAGCC
+>Pyrodictium_occultum_strPL-19_DSM_2709_TYPE
+ACTCCGGTTGATCCTGCCGGGCCCGACCGCTATCGGGGTGGGACTAAGCC
+>Staphylothermus_achaiicus_strP8(BK20S6-10-b1)
+xTTCCGGTTGATCCTGCCGGACCCGACCGCTATCGGGGTGGGGCTAAGCC
+```
+
+### 2. Optional: RDP-Classifier output ###
+This optional input allows you to use the output from [RDP-Classifier](http://rdp.cme.msu.edu/classifier/) to automatically add group names to your sequences.  To use it, go the site above and enter the same FASTA sequence file you will use for REPK.  Click "Submit" then click "show assignment detail" when it is finished.  On the right will be a box that says "download as text file".  Save and open this file and go back to REPK.  Copy and paste the contents of the RDP-Classifier output into the text box marked "Enter your RDP Classifier output file here".  REPK will prepend the RDP-Classifier information to the beginning of each FASTA line. The modified file, renamed.fasta, is available as part of the output.
+
+## OPTIONS ##
+### 1. Restriction endonucleases and cut sites ###
+All commercially available Type IIP restriction endonucleases (i.e. not including [Type IIA,B](http://repk.googlecode.com/files/enzymes_weird_612.txt), etc.) from [REBASE](http://rebase.neb.com/rebase/rebase.html) are available ([see them here](http://repk.googlecode.com/files/enzymes_type2_612.txt), ISO stands for isoschizomer and all enzymes following the first have the same recognition and cutting sites).  You can use all of them, some of them, or none of them.  A custom enzyme (or list of enzymes) can be entered as well, e.g. a fake "no cut" enzyme.  The enzyme list on the REPK website is automatically updated with the latest REBASE database on the first day of each month.
+
+  * _TIP_ The easiest way to use a subset of the REBASE list is to open the plaintext file and remove the lines you do not want to include, then paste the rest into the Custom enzyme box.
+
+  * _A Note About Restriction Enzyme Subtypes_ There are a diverse array of restriction enzymes and although most fall into a class described as Type IIP enzymes, it is not presently possible to separate out all of those that are not, some of which cut at unusual sites or require methylation, for example, so they are included in the commercially available enzyme list even though **they may not be optimal for T-RFLP**.  A classification of restriction enzyme subtypes is available at [REBASE Enzyme Sub Types](http://rebase.neb.com/cgi-bin/sublist).  **Make sure to check that the enzymes you find with REPK are otherwise suitable for T-RFLP**
+
+
+### 2. Taxonomic Rank Delimiter ###
+
+The character used to separate groups in your FASTA sequence names, current only underscore (**`_`**) is allowed.  The example file above uses underscores as taxonomic rank delimiters.
+
+### 3. Taxonomic rank ###
+This option selects the level of Taxonomic Rank to differentiate.
+
+### CHECK TAXONOMIC RANKS INSTEAD OF RUNNING REPK ###
+If you have entered a FASTA sequence file, checking this box and clicking "submit" will not run the REPK analysis but will instead provide a list of the Taxonomic Ranks that REPK will see when it is run.  This enables you to choose the proper rank below.
+
+Using the example file above, each delimiter (underscore in this case) will differentiate the sequences by:
+  1. Genus (e.g. Pyrococcus)
+  1. Species (e.g. abyssi)
+  1. strain (e.g. GE5)
+
+Using the example file above with the example RDP-Classifier file, each delimiter will differentiate the sequences by the following divisions (and whether they are from RDP or are present in the example file):
+  1. Domain (RDP)
+  1. Phylum (RDP)
+  1. Class (RDP)
+  1. Order (RDP)
+  1. Family (RDP)
+  1. Genus (RDP)
+  1. Genus (example)
+  1. Species (example)
+  1. strain (example)
+
+In this example, running the program with a 6 will search for enzymes that discriminate the different Genera in the dataset (as determined by RDP). If you want to to find enzymes that discriminate the different Families in the dataset (as determined by RDP), rerun using 5 as the group subset.  Default is 1.
+
+
+### 4. Cutoff ###
+This is the furthest apart (in basepairs) that two fragments can be in length and still be considered the same fragment.  This should be set considering such things as the amount of known variation in the sequences and the expected variability in fragment length determination by your capillary electrophoresis machine or gel sequencer.  Default is 5.
+
+### 5. Min/Max Fragment Lengths ###
+The shortest and longest fragment lengths acceptable.  You might change these depending on, e.g. the length of your PCR product, the minimum or maximum fragment length your capillary electrophoresis machine can read accurately, the range of fragment lengths that survive your cleanup procedure, or the presence of primers and primer dimers. Any fragments shorter or longer than this will be lumped together and will not contribute in differentiating sequence groups, but will be present in the 'fragfile' output.  Defaults are 75 (min) and 900 (max).
+
+### 6. Stringency ###
+An individual enzyme must distinguish MORE than this percent of sequence groups to be acceptable.  Default is 'automatic', which begins at a stringency of 0 and repeats if it finds too many enzyme sets, incrementing the stringency by 10% until it finds an acceptable number of enzymes sets.  Setting a stringency besides 'automatic' will use the set stringency and not repeat if too many enzyme sets are found.
+
+### 7. Maximum Missing Sequence Group Combinations ###
+The maximum number of sequence group combinations allowed to be missed by each enzyme. As an example, if there are three different sequence groups (e.g. Pyrococcus, Pyrodictium, Staphylothermus) then there are also three sequence group combinations (Pyrococcus-Pyrodictium, Pyrococcus-Staphylothermus, Pyrodictium-Staphylothermus). If it is not possible to distinguish any one of those sequence group combinations (e.g. Pyrococcus from Pyrodictium) then choosing "1" for this option will allow REPK to miss one group combination (Pyrococcus-Pyrodictium) but still find enzymes that distinguish Pyrococcus from Staphylothermus and Pyrodictium from Staphylothermus.  If this number is set too high then it will return many results and the program will fail. Default is 0.
+
+### 8. Max Matches Returned ###
+The maximum number of results to return, up to 10000.  Will only return the highest ranking results.  Default is 100.
+
+
+## OUTPUTS ##
+
+The program makes a new directory for every run and writes several files inside which can be accessed for up to 48 hours by bookmarking the unique URL given on the Results page.
+
+### renamed.fasta ###
+Only if RDP-Classifier output was used, this is the input file with sequences renamed by RDP-Classifier.
+
+### enzymes\_type2.txt ###
+The REBASE enzyme list, if used in the analysis
+
+### custom.txt ###
+The list of enzymes used in the analysis if selected from REBASE list or manually inputted, if any were selected.
+
+### success.txt ###
+This file lists the enzymes that singlehandedly distinguish all of the groups.
+
+### no\_cuts.txt ###
+This file lists the enzymes that don't cut/distinguish any of the groups within the basepair cutoffs.
+
+### yes\_cuts.txt ###
+This file lists the enzymes that did cut and distinguish any of the groups within the basepair cutoffs.  The contents of this file can be used in the custom enzyme box.
+
+### fragfile.txt ###
+This file shows the fragment lengths for each sequence and enzyme combination.
+
+### enzmatrix.txt ###
+This is the file used by the program to calculate the best enzymes. Each row contains a pair of groups, and each column contains the enzyme name. A zero indicates that the enzyme does not distinguish those groups from each other. A one indicates that the enzyme does distinguish those groups from each other. The stringency setting specifies the fraction of ones that an enzyme must have to be acceptable.  This file can be useful in the case that there are no sets which uniquely differentiate your sequences.
+
+### finalout.txt ###
+This is the final output which shows all of the successful enzyme groups.
+  * "Enzyme Picker Key" is a key for the lower part.
+    * Each numbered group of enzymes distinguishes the same groups of sequences (NOTE that they do not give the same fragment lengths, they only distinguish the same groups)
+  * "Enzyme sets" shows the enzyme sets that uniquely differentiate your sequences
+    * Score: the sum of the fractions of sequence groups discriminated by all of the enzymes (a perfect score equals 4).
+  * Enzyme sets: each enzyme listed is only the first member of the bin from "Enzyme Picker Key", so choosing any other member of the same bin will yield the same discriminatory abilities.
+    * Choose your enzyme based upon price, fragment lengths, whatever.
+
+### missingout.txt ###
+This file is part of the output if "max missing group combinations" is set to greater than zero.  It is the same as finalout.txt but with the enzyme groups that were partially successful, that is, those able to discriminate all but the specified number of missing sequence groups combinations.
+
+## GLOSSARY ##
+### Isoschizomer ###
+Isoschizomers are restriction endonucleases  that recognize the same sequence.
+
+### Neoschizomer ###
+Neoschizomers are that subset of isoschizomers that recognize the same sequence, but cleave at different positions.
+
+### Taxonomic rank ###
+The number of the taxonomic group (e.g. Genus, species, ecotype, etc.) to be analyzed by REPK, as delimited by underscores in the sequence file.  Given an example sequence named TaxA\_TaxB\_TaxC\_TaxD, to analyze by TaxC you would choose a Taxonomic Rank of 3.
+
+### Sequence Group ###
+All of the distinct groups in the chosen taxonomic rank. Given an example file with three sequences, named TaxA\_TaxB\_TaxC\_TaxD, VaxA\_VaxB\_VaxC\_VaxD, and WaxA\_WaxB\_WaxC\_WaxD, and using a Group Subset of 3, then there are three Sequence Groups: TaxC, VaxC, and WaxC.
+
+### Sequence Group Combination ###
+Every possible combination of Sequence Groups.  Given an example file with three sequences, named TaxA\_TaxB\_TaxC\_TaxD, VaxA\_VaxB\_VaxC\_VaxD, and WaxA\_WaxB\_WaxC\_WaxD, and using a Group Subset of 3, then there are 3 possible Sequence Group Combinations: TaxC-VaxC, TaxC-WaxC, and VaxC-WaxC.
+
+### Enzyme bins ###
+Enzymes that differentiate the same Sequence Group Combinations, regardless of whether they produce the same fragment lengths, are pooled in the same enzyme bin.
+
+### Enzyme set ###
+Four enzyme bins that together can differentiate all of the Sequence Group Combinations (less any allowed missing groups).
+
+## HINTS AND TIPS ##
+### Too few enzymes ###
+  * Decrease the stringency if possible.
+  * Re-examine the groups you are trying to differentiate, check to see if there are any groups that are not differentiable at all (check out enzmatrix.txt). If so, you will need to allow for missing groups.
+  * Re-examine the cutoff: lowering it will probably give more fragments that could be used to differentiate groups, but could also separate groups that are really the same.
+  * Re-examine the min/max fragment lengths: allowing more lengths might allow more different fragments.
+  * Increase the number of missing groups allowed.
+
+### Too many enzymes ###
+  * Increase the stringency
+  * Increase the cutoff: the fragments will have to be better separated by the enzymes
+  * Decrease the number of missing groups allowed.
+
+
+### Under the hood ###
+Computationally, the program first performs an in silico digestion of the inputted sequences (both forward and reverse complemented), with each restriction enzyme selected by the user, to find the terminal restriction fragment length for each enzyme for each sequence.  Next the stringency filter is applied so that only the fraction of enzymes that passes the user-defined stringency cutoff continue.  Those enzymes are then scanned to find those that either do not differentiate any sequence groups or differentiate them all (within the user-defined maximum and minimum fragment lengths), and those are removed.  The remaining enzymes are binned by their identical ability to differentiate sequence groups (not necessarily with the same fragment lengths, however).  Finally, all enzyme bins are logically compared quad-wise with every other possible combination of 3 enzyme bins to find sets of 4 bins that together differentiate every sequence group.  A score is calculated based upon the total number of sequence groups differentiated by the bin group divided by the number of sequence groups (thus maximum score of 4) and the successful bin groups are reported to the user sorted by score.
+
+## CITING REPK ##
+If you find REPK useful in your research please cite:
+
+Collins, R. E. and G. Rocap. 2007.  REPK: an analytical web server to select restriction endonucleases for terminal restriction fragment length polymorphism analysis. Nucleic Acids Res. 35 (Database issue): W58-W62; doi:10.1093/nar/gkm384    [Free full text](http://nar.oxfordjournals.org/cgi/content/full/35/suppl_2/W58?ijkey=8OPX1p1IyGKNWuj&keytype=ref)
+
+
+## REFERENCES ##
+Cole JR, Chai B, Farris RJ, Wang Q, Kulam SA, McGarrell DM, Garrity GM, Tiedje JM. The Ribosomal Database Project (RDP-II): sequences and tools for high-throughput rRNA analysis. Nucleic Acids Research 2005 Jan 1;33(Database Issue):D294-D296. doi: 10.1093/nar/gki038.
+
+Engebretson JJ, Moyer CL (2003) Fidelity of select restriction endonucleases in determining microbial diversity by terminal-restriction fragment length polymorphism.  Applied and Environmental Microbiology 69:4823-4829.
+
+Ludwig W, Strunk O, Westram R, Richter L, Meier H, Yadhu K, et al. (2004) ARB: a software environment for sequence data.  Nucleic Acids Research 32:1363–1371.
+
+Marsh TL, Saxman P, Cole J, Tiedje J (2000) Terminal restriction fragment length polymorphism analysis program, a web-based research tool for microbial community analysis.
+
+Ricke P, Kolb S, Braker G (2005) Application of a newly developed ARB software-integrated tool for in silico terminal restriction fragment length polymorphism analysis reveals the dominance of a novel pmoA cluster in a forest soil.  Applied and Environmental Microbiology 71:1671-1673.
+
+Roberts RJ, Vincze T, Posfai J, Macelis D (2005) REBASE Restriction enzymes and DNA methyltransferases.  Nucleic Acids Research 33:D230-D232.

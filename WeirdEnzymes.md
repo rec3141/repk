@@ -1,0 +1,65 @@
+
+```
+AarI    CACCTGC(4/8)    ISO
+AciI    CCGC(-3/-1)     ISO     BspACI  SsiI
+AjuI    (7/12)GAANNNNNNNTTGG(11/6)      ISO
+AlfI    (10/12)GCANNNNNNTGC(12/10)      ISO
+AloI    (7/12)GAACNNNNNNTCC(12/7)       ISO
+BaeI    (10/15)ACNNNNGTAYC(12/7)        ISO
+BbvCI   CCTCAGC(-5/-2)  ISO
+BbvI    GCAGC(8/12)     ISO     BseXI   BstV1I
+BbvII   GAAGAC(2/6)     ISO     BbsI    BbsI    BpiI    BpuAI   BstV2I
+BccI    CCATC(4/5)      ISO
+Bce83I  CTTGAG(16/14)   ISO     BpuEI   BpuEI
+BcefI   ACGGC(12/14)    ISO     BceAI   BceAI
+BcgI    (10/12)CGANNNNNNTGC(12/10)      ISO
+BciVI   GTATCC(6/5)     ISO     BfuI
+BdaI    (10/12)TGANNNNNNTCA(12/10)      ISO
+BfiI    ACTGGG(5/4)     ISO     BmrI    BmuI
+BinI    GGATC(4/5)      ISO     AclWI   AclWI   AlwI    BspPI
+BplI    (8/13)GAGNNNNNCTC(13/8) ISO
+Bpu10I  CCTNAGC(-5/-2)  ISO
+BsaXI   (9/12)ACNNNNNCTCC(10/7) ISO
+BseMII  CTCAG(9/7)      ISO     BspCNI  BspCNI
+BseRI   GAGGAG(10/8)    ISO
+BseYI   CCCAGC(-5/-1)   ISO
+BsgI    GTGCAG(16/14)   ISO
+BsiI    CACGAG(-5/-1)   ISO     BauI    BauI    BssSI   Bst2BI
+BsmAI   GTCTC(1/5)      ISO     Alw26I  Alw26I  BstMAI
+BsmI    GAATGC(1/-1)    ISO     BsaMI   BsaMI   Mva1269I        PctI
+BspMI   ACCTGC(4/8)     ISO     Acc36I  Acc36I  BfuAI   BveI
+BsrBI   CCGCTC(-3/-3)   ISO     AccBSI  AccBSI  MbiI
+BsrDI   GCAATG(2/0)     ISO     Bse3DI  Bse3DI  BseMI
+BsrI    ACTGG(1/-1)     ISO     Bse1I   Bse1I   BseNI   BsrSI
+BtgZI   GCGATG(10/14)   ISO
+BtrI    CACGTC(-3/-3)   ISO     AjiI    AjiI    BmgBI
+BtsI    GCAGTG(2/0)     ISO
+CspCI   (11/13)CAANNNNNGTGG(12/10)      ISO
+EciI    GGCGGA(11/9)    ISO
+Eco31I  GGTCTC(1/5)     ISO     BsaI    BsaI    Bso31I  BspTNI
+Eco57I  CTGAAG(16/14)   ISO     AcuI    AcuI
+Eco57MI CTGRAG(16/14)   ISO
+Esp3I   CGTCTC(1/5)     ISO     BsmBI   BsmBI
+FalI    (8/13)AAGNNNNNCTT(13/8) ISO
+FauI    CCCGC(4/6)      ISO     SmuI
+FinI    GGGAC(10/14)    ISO     BslFI   BslFI   BsmFI   FaqI
+FokI    GGATG(9/13)     ISO
+GsuI    CTGGAG(16/14)   ISO     BpmI    BpmI
+HgaI    GACGC(5/10)     ISO     CseI    CseI
+Hin4I   (8/13)GAYNNNNNVTC(13/8) ISO
+HphI    GGTGA(8/7)      ISO     AsuHPI  AsuHPI
+Ksp632I CTCTTC(1/4)     ISO     Bst6I   Bst6I   Eam1104I        EarI
+MboII   GAAGA(8/7)      ISO
+MmeI    TCCRAC(20/18)   ISO
+MnlI    CCTC(7/6)       ISO
+PleI    GAGTC(4/5)      ISO     PpsI
+PpiI    (7/12)GAACNNNNNCTC(13/8)        ISO
+PsrI    (7/12)GAACNNNNNNTAC(12/7)       ISO
+SapI    GCTCTTC(1/4)    ISO     LguI    LguI    PciSI
+SfaNI   GCATC(5/9)      ISO     LweI    LweI
+TaqII   GACCGA(11/9),CACCCA(11/9)       ISO
+TsoI    TARCCA(11/9)    ISO
+TspDTI  ATGAA(11/9)     ISO
+TspGWI  ACGGA(11/9)     ISO
+TstI    (8/13)CACNNNNNNTCC(12/7)        ISO
+```
