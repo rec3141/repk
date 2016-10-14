@@ -2,7 +2,7 @@
 <body>
 <?php
  $repk_location="/Library/Webserver/Documents/cgi/repk/";
- $repk_filename="repk.cgi";
+ $repk_filename="repk0.3.3.cgi";
  $cgi_location="/cgi/repk/";
 ?>
 
